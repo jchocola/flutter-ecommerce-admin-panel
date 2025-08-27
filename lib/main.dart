@@ -25,8 +25,8 @@ Future<void> main() async {
 
   setPathUrlStrategy();
     await Supabase.initialize(
-    url: 'https://zlsnfwctlbidxdahlazo.supabase.co',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpsc25md2N0bGJpZHhkYWhsYXpvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEyMDM2MzUsImV4cCI6MjA2Njc3OTYzNX0.0MzPCBCaAxo5EAKFQA5iED_EaU83tx1THFjBS215_mM',
+    url: 'YOUR_URL',
+    anonKey: 'YOUR_ANON_KEY',
     authOptions: const FlutterAuthClientOptions(
       authFlowType: AuthFlowType.pkce, // Better for web security
     ),
