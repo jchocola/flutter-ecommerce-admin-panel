@@ -16,7 +16,7 @@ import 'package:admin_panel/util/constants/image_strings.dart';
 import 'package:admin_panel/util/constants/sizes.dart';
 import 'package:admin_panel/util/device/device_utility.dart';
 import 'package:admin_panel/util/formatters/enum.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 class MediaUploader extends StatelessWidget {
   const MediaUploader({super.key});
@@ -25,12 +25,12 @@ class MediaUploader extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(MediaController());
     final dark = THelperFunctions.isDarkMode(context);
-    final user = Supabase.instance.client.auth.currentUser;
-if (user == null) {
-  print('❌ Not logged in');
-} else {
-  print ('Loged ✅');
-}
+   // final user = Supabase.instance.client.auth.currentUser;
+// if (user == null) {
+//   print('❌ Not logged in');
+// } else {
+//   print ('Loged ✅');
+// }
     return Obx(() {
       if (!controller.showImageUploaderSection.value)
         return const SizedBox.shrink();

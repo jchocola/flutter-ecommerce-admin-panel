@@ -39,7 +39,6 @@ import 'package:admin_panel/screens/tabs/all_tabs/tabs.dart';
 import 'package:admin_panel/screens/tabs/create_tabs/create_tabs.dart';
 import 'package:admin_panel/screens/tabs/edit_tabs/edit_tabs.dart';
 import 'package:admin_panel/util/routes/routes.dart';
-import 'package:admin_panel/util/routes/routes_middleware.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/utils.dart';

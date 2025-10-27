@@ -14,10 +14,10 @@ import 'package:get/get.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 class UserLogRow extends DataTableSource {
-  final supabase = Supabase.instance.client;
+  //final supabase = Supabase.instance.client;
 
   List<Map<String, dynamic>> logs = [];
 
@@ -26,15 +26,15 @@ class UserLogRow extends DataTableSource {
   }
 
   Future<void> fetchUserLogs() async {
-    final response = await supabase
-        .from('logs')
-        .select()
-        .order('created_at', ascending: false);
+    // final response = await supabase
+    //     .from('logs')
+    //     .select()
+    //     .order('created_at', ascending: false);
 
-    if (response != null && response is List) {
-      logs = List<Map<String, dynamic>>.from(response);
-      notifyListeners(); // Refresh the DataTable
-    }
+    // if (response != null && response is List) {
+    //   logs = List<Map<String, dynamic>>.from(response);
+    //   notifyListeners(); // Refresh the DataTable
+    // }
   }
 
   @override

@@ -15,8 +15,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class CategoryRows extends DataTableSource {
   final List<CategoryModel> categories;
@@ -27,7 +26,7 @@ class CategoryRows extends DataTableSource {
   DataRow? getRow(int index) {
     if (index >= categories.length) return null;
     final category = categories[index];
-    final supabase = Supabase.instance.client;
+   // final supabase = Supabase.instance.client;
 
 String formattedDate = DateFormat('yyyy-MM-dd').format(category.createdAt!); // 2025-07-04
 
@@ -124,23 +123,23 @@ box.write('cached_category', category.toJson());
 }
 
 Future<String?> getTitle(String tabId) async {
-  final supabase = Supabase.instance.client;
+ // final supabase = Supabase.instance.client;
 
-  final response = await supabase
-      .from('tab_config')
-      .select('title')
-      .eq('id', tabId)
-      .maybeSingle();
+  // final response = await supabase
+  //     .from('tab_config')
+  //     .select('title')
+  //     .eq('id', tabId)
+  //     .maybeSingle();
 
  
 
-  if (response == null || response == {}) {
-    print('No data found');
-    return null;
-  }
+  // if (response == null || response == {}) {
+  //   print('No data found');
+  //   return null;
+  // }
 
   // Access the title inline — since you can't use `.data`
-  print('Title: ${response['title']}');
-  return response['title'];
+  // print('Title: ${response['title']}');
+  // return response['title'];
 }
 

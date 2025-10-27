@@ -2,11 +2,9 @@ import 'package:admin_panel/screens/settings/other_screens/user_activity_screen/
 import 'package:admin_panel/util/models/brand_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-
 
 class BrandController extends GetxController {
-  final supabase = Supabase.instance.client;
+  //final supabase = Supabase.instance.client;
   static BrandController get instance => Get.find();
 
   final RxList<BrandModel> brands = <BrandModel>[].obs;
@@ -18,31 +16,31 @@ class BrandController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    loadBrands();
+   // loadBrands();
   }
 
-  Future<void> loadBrands() async {
-    try {
-      isLoading.value = true; // ✅ Start loading
+  // Future<void> loadBrands() async {
+  //   try {
+  //     isLoading.value = true; // ✅ Start loading
 
-      final response = await supabase
-          .from('brands')
-          .select()
-          .order('created_at', ascending: false);
+  //     final response = await supabase
+  //         .from('brands')
+  //         .select()
+  //         .order('created_at', ascending: false);
 
-      final parsed = (response as List)
-          .map((e) => BrandModel.fromJson(e))
-          .toList();
+  //     final parsed = (response as List)
+  //         .map((e) => BrandModel.fromJson(e))
+  //         .toList();
 
-      brands.value = parsed;
-      allBrands.value = response.cast<Map<String, dynamic>>();
-      filterBrands.value = allBrands.toList();
-    } catch (e) {
-      print("❌ Error fetching brands: $e");
-    } finally {
-      isLoading.value = false; // ✅ Stop loading
-    }
-  }
+  //     brands.value = parsed;
+  //     allBrands.value = response.cast<Map<String, dynamic>>();
+  //     filterBrands.value = allBrands.toList();
+  //   } catch (e) {
+  //     print("❌ Error fetching brands: $e");
+  //   } finally {
+  //     isLoading.value = false; // ✅ Stop loading
+  //   }
+  // }
 
   void filterBrand(String query) {
     if (query.trim().isEmpty) {
@@ -68,14 +66,14 @@ class BrandController extends GetxController {
     required bool isFeatured,
   }) async {
     try {
-      await supabase.from('brands').insert({
-        'id': id,
-        'title': title,
-        'image_url': imageUrl,
-        'is_featured': isFeatured,
-        'category': category,
-        'created_at': DateTime.now().toIso8601String(),
-      });
+      // await supabase.from('brands').insert({
+      //   'id': id,
+      //   'title': title,
+      //   'image_url': imageUrl,
+      //   'is_featured': isFeatured,
+      //   'category': category,
+      //   'created_at': DateTime.now().toIso8601String(),
+      // });
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('✅ Brand created successfully')),
@@ -84,7 +82,7 @@ class BrandController extends GetxController {
 
      logController.updateUserLog('Brand', 'Brand Updated');
       Get.back(result: true);
-      await loadBrands(); // Refresh list
+    //  await loadBrands(); // Refresh list
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: $e')),
@@ -100,13 +98,13 @@ Future<void> updateBrand({
   required bool isFeatured,
 }) async {
   try {
-    await supabase.from('brands').update({
-      'title': title,
-      'image_url': imageUrl,
-      'is_featured': isFeatured,
-      'category': category,
-      'created_at': DateTime.now().toIso8601String(),  // optional
-    }).eq('id', id);
+    // await supabase.from('brands').update({
+    //   'title': title,
+    //   'image_url': imageUrl,
+    //   'is_featured': isFeatured,
+    //   'category': category,
+    //   'created_at': DateTime.now().toIso8601String(),  // optional
+    // }).eq('id', id);
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('✅ Brand updated successfully')),
@@ -116,7 +114,7 @@ Future<void> updateBrand({
     logController.updateUserLog('Brand', 'Brand Updated');
 
     Get.back(result: true);
-    await loadBrands();  // Refresh brand list
+   // await loadBrands();  // Refresh brand list
 
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -133,10 +131,10 @@ Future<void> updateBrand({
 
 
     // Delete the tab itself
-    final deleteTabResponse = await Supabase.instance.client
-      .from('brands')
-      .delete()
-      .eq('id', brandID);
+    // final deleteTabResponse = await Supabase.instance.client
+    //   .from('brands')
+    //   .delete()
+    //   .eq('id', brandID);
 
     
     // Check for errors - Supabase flutter returns PostgrestResponse, so errors should be checked like this

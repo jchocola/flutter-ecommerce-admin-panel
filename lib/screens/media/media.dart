@@ -4,7 +4,6 @@ import 'package:admin_panel/screens/media/responsive-design/media_mobile_scren.d
 import 'package:admin_panel/screens/media/responsive-design/media_tablet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class MediaScreen extends StatelessWidget {
   const MediaScreen({super.key});

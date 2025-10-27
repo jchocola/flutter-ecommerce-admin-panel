@@ -4,11 +4,11 @@ import 'package:admin_panel/util/models/banner_model.dart';
 import 'package:admin_panel/util/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 import 'package:uuid/uuid.dart';
 
 class BannerController extends GetxController {
-  final supabase = Supabase.instance.client;
+  //final supabase = Supabase.instance.client;
   final uuid = const Uuid();
 
   final RxList<BannerModel> banners = <BannerModel>[].obs;
@@ -21,29 +21,29 @@ class BannerController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchBanners();
+   // fetchBanners();
     fetchCategories();
   }
 
-  Future<void> fetchBanners() async {
-    try {
-      isLoading.value = true; // ✅ Start loading
+  // Future<void> fetchBanners() async {
+  //   try {
+  //     isLoading.value = true; // ✅ Start loading
 
-      final response = await supabase
-          .from('banners')
-          .select()
-          .order('created_at', ascending: false);
+  //     final response = await supabase
+  //         .from('banners')
+  //         .select()
+  //         .order('created_at', ascending: false);
 
-      banners.value =
-          (response as List).map((item) => BannerModel.fromJson(item)).toList();
+  //     banners.value =
+  //         (response as List).map((item) => BannerModel.fromJson(item)).toList();
 
-      print("✅ Fetched ${banners.length} banners.");
-    } catch (e) {
-      print('❌ Failed to fetch banners: $e');
-    } finally {
-      isLoading.value = false; // ✅ End loading
-    }
-  }
+  //     print("✅ Fetched ${banners.length} banners.");
+  //   } catch (e) {
+  //     print('❌ Failed to fetch banners: $e');
+  //   } finally {
+  //     isLoading.value = false; // ✅ End loading
+  //   }
+  // }
 
   
 Future<void> updateBanner({
@@ -72,16 +72,16 @@ Future<void> updateBanner({
   };
 
   try {
-    await supabase
-        .from('banners')
-        .update(updatedBanner)
-        .eq('id', bannerId); // important: WHERE id = bannerId
+    // await supabase
+    //     .from('banners')
+    //     .update(updatedBanner)
+    //     .eq('id', bannerId); // important: WHERE id = bannerId
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('✅ Banner updated successfully')),
     );
 
-    await fetchBanners(); // Refresh list
+   // await fetchBanners(); // Refresh list
   } catch (e) {
     print('❌ Supabase Banner Update Error: $e');
     ScaffoldMessenger.of(context).showSnackBar(
@@ -120,7 +120,7 @@ Future<void> updateBanner({
     );
 
     try {
-      await supabase.from('banners').insert(newBanner);
+     // await supabase.from('banners').insert(newBanner);
 
      Get.snackbar('Banner Updated', 'Banner Successfully uploaded',backgroundColor: TColors.primary, colorText: Colors.white);
 
@@ -130,7 +130,7 @@ Future<void> updateBanner({
      
 
 
-      await fetchBanners(); // Refresh list
+    //  await fetchBanners(); // Refresh list
 
       Get.offAllNamed(TRoutes.banners);
       
@@ -147,15 +147,15 @@ Future<void> updateBanner({
 
   Future<void> fetchProducts() async {
     try {
-      final response = await supabase
-          .from('products')
-          .select()
-          .order('created_at', ascending: false);
-      if (response != null) {
-        products.value = List<Map<String, dynamic>>.from(response);
-      } else {
-        products.clear();
-      }
+      // final response = await supabase
+      //     .from('products')
+      //     .select()
+      //     .order('created_at', ascending: false);
+      // if (response != null) {
+      //   products.value = List<Map<String, dynamic>>.from(response);
+      // } else {
+      //   products.clear();
+      // }
     } catch (e) {
       print('Error fetching products: $e');
       products.clear();
@@ -166,15 +166,15 @@ Future<void> updateBanner({
 
   Future<void> fetchCategories() async {
     try {
-      final response = await supabase
-          .from('tab_categories')
-          .select()
-          .order('created_at', ascending: false);
-      if (response != null) {
-        categories.value = List<Map<String, dynamic>>.from(response);
-      } else {
-        categories.clear();
-      }
+      // final response = await supabase
+      //     .from('tab_categories')
+      //     .select()
+      //     .order('created_at', ascending: false);
+      // if (response != null) {
+      //   categories.value = List<Map<String, dynamic>>.from(response);
+      // } else {
+      //   categories.clear();
+      // }
     } catch (e) {
       print('Error fetching categories: $e');
       categories.clear();
@@ -183,12 +183,12 @@ Future<void> updateBanner({
 
 
   Future<void> deleteBanner(String bannerID) async {
-    final supabase = Supabase.instance.client;
+   // final supabase = Supabase.instance.client;
 
     try {
-      final response = await supabase.from('banners').delete().eq('id', bannerID);
+      // final response = await supabase.from('banners').delete().eq('id', bannerID);
 
-      fetchBanners();
+      // fetchBanners();
 
 Get.back();
       Get.snackbar('Banner Deleted', 'you have successfully deleted banner', backgroundColor: TColors.primary, colorText: Colors.white);

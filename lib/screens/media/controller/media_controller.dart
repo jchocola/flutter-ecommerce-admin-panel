@@ -15,7 +15,6 @@ import 'package:get/get.dart';
 import 'package:admin_panel/util/models/image_model.dart';
 import 'package:admin_panel/util/formatters/enum.dart';
 import 'package:lottie/lottie.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 class MediaController extends GetxController {
@@ -34,7 +33,7 @@ class MediaController extends GetxController {
   final RxList<ImageModel> allCategoryImages = <ImageModel>[].obs;
   final RxList<ImageModel> allUserImages = <ImageModel>[].obs;
 
-  final supabase = Supabase.instance.client;
+  //final supabase = Supabase.instance.client;
   final uuid = Uuid();
 
   /// Handle file picker selection
@@ -165,62 +164,60 @@ class MediaController extends GetxController {
           targetList = allImages;
       }
 
-      final futures = selectedImagesToUpload.asMap().entries.map((entry) async {
-        final i = entry.key;
-        final image = entry.value;
+      final futures =
+          selectedImagesToUpload.asMap().entries.map((entry) async {
+            final i = entry.key;
+            final image = entry.value;
 
-        final fileName =
-            '${DateTime.now().millisecondsSinceEpoch}${image.fileName}';
-        final fileBytes = image.localImageToDisplay!;
+            final fileName =
+                '${DateTime.now().millisecondsSinceEpoch}${image.fileName}';
+            final fileBytes = image.localImageToDisplay!;
 
-        final response = await supabase.storage.from('images').uploadBinary(
-              '$targetPath/$fileName',
-              fileBytes,
-              fileOptions: const FileOptions(
-                contentType: 'image/jpeg',
-                upsert: true,
-              ),
-            );
+            // final response = await supabase.storage.from('images').uploadBinary(
+            //       '$targetPath/$fileName',
+            //       fileBytes,
+            //       fileOptions: const FileOptions(
+            //         contentType: 'image/jpeg',
+            //         upsert: true,
+            //       ),
+            //     );
 
-          final publicUrl =
-              supabase.storage.from('images').getPublicUrl('$targetPath/$fileName');
+            // final publicUrl =
+            //     supabase.storage.from('images').getPublicUrl('$targetPath/$fileName');
 
-          final uploadedImage = ImageModel(
-            url: publicUrl,
-            folder: targetPath,
-            id: uuid.v4(),
-            isActive: false,
-            fileName: fileName,
-            
-            localImageToDisplay: fileBytes,
-          );
+            // final uploadedImage = ImageModel(
+            //   url: publicUrl,
+            //   folder: targetPath,
+            //   id: uuid.v4(),
+            //   isActive: false,
+            //   fileName: fileName,
 
-          targetList.add(uploadedImage);
+            //   localImageToDisplay: fileBytes,
+            // );
 
-          final imageId = uuid.v4();
+            // targetList.add(uploadedImage);
 
-         try {
-  final response = await supabase.from('images').insert({
-    'url': uploadedImage.url,
-    'filename': fileName,
-    'id': imageId,
-    'is_active': false,
-    'folder': targetPath,
-    'created_at': DateTime.now().toIso8601String(),
-    'mediaCategory': targetPath,
-  });
-allImages.add(uploadedImage);         // ✅ Add this line if not already
+            // final imageId = uuid.v4();
 
-  // If insert succeeds, response contains inserted rows
-  print('✅ Insert success: $response');
-} catch (error) {
-  // Insert failed
-  print('❌ Insert failed: $error');
-}
+            try {
+              //   final response = await supabase.from('images').insert({
+              //     'url': uploadedImage.url,
+              //     'filename': fileName,
+              //     'id': imageId,
+              //     'is_active': false,
+              //     'folder': targetPath,
+              //     'created_at': DateTime.now().toIso8601String(),
+              //     'mediaCategory': targetPath,
+              //   });
+              // allImages.add(uploadedImage);         // ✅ Add this line if not already
 
-
-        
-      }).toList();
+              //   // If insert succeeds, response contains inserted rows
+              //   print('✅ Insert success: $response');
+            } catch (error) {
+              // Insert failed
+              print('❌ Insert failed: $error');
+            }
+          }).toList();
 
       await Future.wait(futures);
 
@@ -244,130 +241,144 @@ allImages.add(uploadedImage);         // ✅ Add this line if not already
       );
     }
   }
-Future<void> deleteImageByFileNameAndFolder(String fileName, String folder) async {
-  try {
-    final supabase = Supabase.instance.client;
 
-    final filePath = '$folder/$fileName';
-    print('🧹 Deleting image at: $filePath');
+  Future<void> deleteImageByFileNameAndFolder(
+    String fileName,
+    String folder,
+  ) async {
+    try {
+      //     final supabase = Supabase.instance.client;
 
-    // Step 1: Delete from storage
-    final storageResponse = await supabase.storage.from('images').remove([filePath]);
+      //     final filePath = '$folder/$fileName';
+      //     print('🧹 Deleting image at: $filePath');
 
-    if (storageResponse is List && storageResponse.isEmpty) {
-      print('✅ Storage: Deleted $filePath');
-    } else {
-      print('❌ Storage deletion failed: $storageResponse');
+      //     // Step 1: Delete from storage
+      //     final storageResponse = await supabase.storage.from('images').remove([filePath]);
+
+      //     if (storageResponse is List && storageResponse.isEmpty) {
+      //       print('✅ Storage: Deleted $filePath');
+      //     } else {
+      //       print('❌ Storage deletion failed: $storageResponse');
+      //     }
+
+      //     // Step 2: Delete from images table
+      //     final dbResponse = await supabase
+      //         .from('images')
+      //         .delete()
+      //         .eq('filename', fileName);
+      // MediaController.instance.allImages.removeWhere((img) =>
+      //     img.fileName == fileName && img.folder == folder);
+
+      //     Get.back();
+
+      //     if (dbResponse is List && dbResponse.isNotEmpty) {
+      //       print('✅ Database: Deleted record for $fileName');
+      //     } else {
+      //       print('❌ Database: No match found or delete denied. Response: $dbResponse');
+      //     }
+    } catch (e) {
+      print('❌ Exception deleting image: $e');
     }
-
-    // Step 2: Delete from images table
-    final dbResponse = await supabase
-        .from('images')
-        .delete()
-        .eq('filename', fileName);
-MediaController.instance.allImages.removeWhere((img) =>
-    img.fileName == fileName && img.folder == folder);
-
-    Get.back();
-
-    if (dbResponse is List && dbResponse.isNotEmpty) {
-      print('✅ Database: Deleted record for $fileName');
-    } else {
-      print('❌ Database: No match found or delete denied. Response: $dbResponse');
-    }
-  } catch (e) {
-    print('❌ Exception deleting image: $e');
   }
-}
 
-Future<bool> deleteImageFromStorage(String path) async {
-  try {
-    final response = await Supabase.instance.client
-        .storage
-        .from('images')
-        .remove([path]);
+  Future<bool> deleteImageFromStorage(String path) async {
+    try {
+      // final response = await Supabase.instance.client
+      //     .storage
+      //     .from('images')
+      //     .remove([path]);
 
-    if (response is List && response.isEmpty) {
-      print('✅ Storage: Deleted $path');
-      return true;
-    } else {
-      print('❌ Storage deletion error: $response');
+      // if (response is List && response.isEmpty) {
+      //   print('✅ Storage: Deleted $path');
+      //   return true;
+      // } else {
+      //   print('❌ Storage deletion error: $response');
+      //   return false;
+      // }
+      return false;
+    } catch (e) {
+      print('❌ Exception deleting from storage: $e');
       return false;
     }
-  } catch (e) {
-    print('❌ Exception deleting from storage: $e');
-    return false;
   }
-}
 
+  Future<bool> deleteImageFromDatabase(String imageId) async {
+    try {
+      // final response = await Supabase.instance.client
+      //     .from('images')
+      //     .delete()
+      //     .eq('id', imageId);
 
-
-Future<bool> deleteImageFromDatabase(String imageId) async {
-  try {
-    final response = await Supabase.instance.client
-        .from('images')
-        .delete()
-        .eq('id', imageId);
-
-    if (response is List && response.isNotEmpty) {
-      print('✅ Database: Deleted ID $imageId');
-      return true;
-    } else {
-      print('❌ Database: No matching ID or permission denied. Response: $response');
+      // if (response is List && response.isNotEmpty) {
+      //   print('✅ Database: Deleted ID $imageId');
+      //   return true;
+      // } else {
+      //   print(
+      //     '❌ Database: No matching ID or permission denied. Response: $response',
+      //   );
+      //   return false;
+      // }
+      return false;
+    } catch (e) {
+      print('❌ Exception deleting from database: $e');
       return false;
     }
-  } catch (e) {
-    print('❌ Exception deleting from database: $e');
-    return false;
-  }
-}
-
-
-
-Future<void> deleteImage(ImageModel image) async {
-  if (image.id == null || image.id!.isEmpty) {
-    print('❌ Invalid image ID');
-    return;
   }
 
-  final path = '${image.folder}/${image.fileName}';
-  print('🗑️ Deleting: $path with ID ${image.id}');
+  Future<void> deleteImage(ImageModel image) async {
+    if (image.id == null || image.id!.isEmpty) {
+      print('❌ Invalid image ID');
+      return;
+    }
 
-  final storageResult = await deleteImageFromStorage(path);
-  final dbResult = await deleteImageFromDatabase(image.id!);
+    final path = '${image.folder}/${image.fileName}';
+    print('🗑️ Deleting: $path with ID ${image.id}');
 
-  if (storageResult && dbResult) {
-    MediaController.instance.allImages.remove(image);
-    Get.snackbar('Success', 'Image deleted',
-        backgroundColor: Colors.green, colorText: Colors.white);
-  } else {
-    Get.snackbar('Failed', 'Image not deleted',
-        backgroundColor: Colors.red, colorText: Colors.white);
+    final storageResult = await deleteImageFromStorage(path);
+    final dbResult = await deleteImageFromDatabase(image.id!);
+
+    if (storageResult && dbResult) {
+      MediaController.instance.allImages.remove(image);
+      Get.snackbar(
+        'Success',
+        'Image deleted',
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } else {
+      Get.snackbar(
+        'Failed',
+        'Image not deleted',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
   }
-}
-
-
-
 
   /// Show a loading dialog while uploading
   void uploadImageLoader() {
     showDialog(
       context: Get.context!,
       barrierDismissible: false,
-      builder: (context) => PopScope(
-        canPop: false,
-        child: AlertDialog(
-          title: const Text('Uploading Images'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Lottie.asset(TImages.uploading_animation, width: 150, height: 150),
-              const SizedBox(height: TSizes.spaceBetwwenItems),
-              const Text('Sit tight, Your images are uploading...'),
-            ],
+      builder:
+          (context) => PopScope(
+            canPop: false,
+            child: AlertDialog(
+              title: const Text('Uploading Images'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Lottie.asset(
+                    TImages.uploading_animation,
+                    width: 150,
+                    height: 150,
+                  ),
+                  const SizedBox(height: TSizes.spaceBetwwenItems),
+                  const Text('Sit tight, Your images are uploading...'),
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
     );
   }
 
@@ -389,67 +400,63 @@ Future<void> deleteImage(ImageModel image) async {
     }
   }
 
-Future<void> fetchImagesByCategory(String category) async {
+  Future<void> fetchImagesByCategory(String category) async {
     print('📦 Fetching images for category: $category');
-  try {
-    final data = await supabase
-        .from('images')
-        .select()
-        .eq('mediaCategory', category)
-        .order('created_at', ascending: false);
+    try {
+      // final data = await supabase
+      //     .from('images')
+      //     .select()
+      //     .eq('mediaCategory', category)
+      //     .order('created_at', ascending: false);
 
-    allImages.value = (data as List<dynamic>)
-        .map((json) => ImageModel.fromJson(json))
-        .toList();
+      // allImages.value =
+      //     (data as List<dynamic>)
+      //         .map((json) => ImageModel.fromJson(json))
+      //         .toList();
 
-    print('✅ Loaded ${allImages.length} images for "$category"');
-  } catch (e) {
-    print('❌ Error fetching images: $e');
+      // print('✅ Loaded ${allImages.length} images for "$category"');
+    } catch (e) {
+      print('❌ Error fetching images: $e');
+    }
   }
-}
 
-Future<List<ImageModel>?> selectedImagesFromMedia({
-  List<String>? selectedUrls,
-  bool allowSelection = true,
-  bool multipleSelection = false,
-}) async {
-  showImageUploaderSection.value = true;
+  Future<List<ImageModel>?> selectedImagesFromMedia({
+    List<String>? selectedUrls,
+    bool allowSelection = true,
+    bool multipleSelection = false,
+  }) async {
+    showImageUploaderSection.value = true;
 
-  final context = Get.context!;
-  final theme = Theme.of(context);
+    final context = Get.context!;
+    final theme = Theme.of(context);
 
-  return await Get.bottomSheet<List<ImageModel>>(
-    isScrollControlled: true,
-    backgroundColor: theme.scaffoldBackgroundColor,
-    Material(
-      color: theme.scaffoldBackgroundColor,
-      child: Theme(
-        data: theme, // inherit theme from current context
-        child: FractionallySizedBox(
-          heightFactor: 1,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(TSizes.defaultSpace),
-              child: Column(
-                children: [
-                  const MediaUploader(),
-                  MediaContent(
-                    allowSelection: allowSelection,
-                    allowMultipleSelection: multipleSelection,
-                    alreadySelectedUrls: selectedUrls ?? [],
-                  ),
-                ],
+    return await Get.bottomSheet<List<ImageModel>>(
+      isScrollControlled: true,
+      backgroundColor: theme.scaffoldBackgroundColor,
+      Material(
+        color: theme.scaffoldBackgroundColor,
+        child: Theme(
+          data: theme, // inherit theme from current context
+          child: FractionallySizedBox(
+            heightFactor: 1,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(TSizes.defaultSpace),
+                child: Column(
+                  children: [
+                    const MediaUploader(),
+                    MediaContent(
+                      allowSelection: allowSelection,
+                      allowMultipleSelection: multipleSelection,
+                      alreadySelectedUrls: selectedUrls ?? [],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
-
-
-}
-
-
-

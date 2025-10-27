@@ -3,7 +3,7 @@ import 'package:admin_panel/util/constants/colors.dart';
 import 'package:admin_panel/util/helpers/helpers_function.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 class TabConfigButtonsEdit extends StatefulWidget {
   const TabConfigButtonsEdit({super.key, this.tabID});
@@ -14,7 +14,7 @@ class TabConfigButtonsEdit extends StatefulWidget {
 }
 
 class _TabConfigButtonsEditState extends State<TabConfigButtonsEdit> {
-  final supabase = Supabase.instance.client;
+  //final supabase = Supabase.instance.client;
 
   // updated structure: label => list of {id, title}
   Map<String, List<Map<String, dynamic>>> attributeMap = {};
@@ -32,52 +32,52 @@ class _TabConfigButtonsEditState extends State<TabConfigButtonsEdit> {
 
 Future<void> fetchTabConfig() async {
   try {
-    final response = await supabase
-        .from('tab_config')
-        .select()
-        .eq('tab_location', 'home1');
+    // final response = await supabase
+    //     .from('tab_config')
+    //     .select()
+    //     .eq('tab_location', 'home1');
 
-    if (response is List<dynamic>) {
-      final Map<String, List<Map<String, dynamic>>> map = {};
+    // if (response is List<dynamic>) {
+    //   final Map<String, List<Map<String, dynamic>>> map = {};
 
-      for (var item in response) {
-        final label = item['tab_location'];
-        final title = item['title'];
-        final id = item['id'];
+    //   for (var item in response) {
+    //     final label = item['tab_location'];
+    //     final title = item['title'];
+    //     final id = item['id'];
 
-        if (label == null || title == null || id == null) {
-          continue;
-        }
+    //     if (label == null || title == null || id == null) {
+    //       continue;
+    //     }
 
-        final labelStr = label.toString();
-        final entry = {
-          'id': id.toString(),
-          'title': title.toString(),
-        };
+    //     final labelStr = label.toString();
+    //     final entry = {
+    //       'id': id.toString(),
+    //       'title': title.toString(),
+    //     };
 
-        if (!map.containsKey(labelStr)) {
-          map[labelStr] = [];
-        }
+    //     if (!map.containsKey(labelStr)) {
+    //       map[labelStr] = [];
+    //     }
 
-        map[labelStr]!.add(entry);
-      }
+    //     map[labelStr]!.add(entry);
+    //   }
 
-      if(!mounted) return;
-      setState(() {
-        attributeMap = map;
-        // Initialize selectedValues based on controller.selectedTab
-        for (final label in map.keys) {
-          // If selectedTab is among options, select it
-          final tabId = controller.selectedTab.value;
-          final found = map[label]!.any((tab) => tab['id'] == tabId);
-          selectedValues[label] = (found ? tabId : '')!;
-        }
+    //   if(!mounted) return;
+    //   setState(() {
+    //     attributeMap = map;
+    //     // Initialize selectedValues based on controller.selectedTab
+    //     for (final label in map.keys) {
+    //       // If selectedTab is among options, select it
+    //       final tabId = controller.selectedTab.value;
+    //       final found = map[label]!.any((tab) => tab['id'] == tabId);
+    //       selectedValues[label] = (found ? tabId : '')!;
+    //     }
 
-        isLoading = false;
-      });
-    } else {
-      throw Exception('Unexpected response format');
-    }
+    //     isLoading = false;
+    //   });
+    // } else {
+    //   throw Exception('Unexpected response format');
+    // }
   } catch (e) {
     print('Error fetching tab_config: $e');
     setState(() => isLoading = false);

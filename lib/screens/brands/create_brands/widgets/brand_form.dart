@@ -53,14 +53,14 @@ void initState() {
 
   Future<void> _fetchTabs() async {
     try {
-      final data = await controller.supabase
-          .from('tab_categories')
-          .select()
-          .order('title');
-      final tabs = (data as List)
-          .map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
-          .toList();
-      _tabs.assignAll(tabs);
+      // final data = await controller.supabase
+      //     .from('tab_categories')
+      //     .select()
+      //     .order('title');
+      // final tabs = (data as List)
+      //     .map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
+      //     .toList();
+     // _tabs.assignAll(tabs);
     } catch (e) {
       print("Failed to load tabs: $e");
     }

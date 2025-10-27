@@ -7,7 +7,7 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 class BannerRows extends DataTableSource {
   final List<BannerModel> banners;
@@ -47,17 +47,17 @@ final void Function()? onRefresh;
                               context: Get.context!,
                               title: 'Banner Status',
                               confirmText: 'Inactive',
-                              onConfirm:
-                                  () async =>
-                                      await uploadBannerStatusInactive(banner.id!),
+                              // onConfirm:
+                              //     () async =>
+                              //         await uploadBannerStatusInactive(banner.id!),
                               content: 'Do you want to inactive this banner ?',
                             )
                             : TDialogs.defaultDialog(
                               context: Get.context!,
                               title: 'Banner Status',
                               confirmText: 'Active',
-                              onConfirm:
-                                  () async => await uploadBannerStatusActive(banner.id!),
+                              // onConfirm:
+                              //     () async => await uploadBannerStatusActive(banner.id!),
                               content: 'Do you want to active this banner ?',
                             ),
             child: Icon(
@@ -113,35 +113,35 @@ final void Function()? onRefresh;
   @override
   int get selectedRowCount => 0;
 
-  uploadBannerStatusInactive(String id) async {
-    final supabase = Supabase.instance.client;
+  // uploadBannerStatusInactive(String id) async {
+  //   final supabase = Supabase.instance.client;
 
-    try {
-      await Supabase.instance.client
-          .from('banners')
-          .update({'is_active': false})
-          .eq('id', id);
-          Get.back();
-              onRefresh!(); // trigger data reload
+  //   try {
+  //     await Supabase.instance.client
+  //         .from('banners')
+  //         .update({'is_active': false})
+  //         .eq('id', id);
+  //         Get.back();
+  //             onRefresh!(); // trigger data reload
 
-    } catch (e) {
-      print('inactive error' +e.toString());
-    }
-  }
+  //   } catch (e) {
+  //     print('inactive error' +e.toString());
+  //   }
+  // }
 
-  uploadBannerStatusActive(String id) async {
-   final supabase = Supabase.instance.client;
+  // uploadBannerStatusActive(String id) async {
+  //  final supabase = Supabase.instance.client;
 
-    try {
-      await Supabase.instance.client
-          .from('banners')
-          .update({'is_active': true})
-          .eq('id', id);
-          Get.back();
-              onRefresh!(); // trigger data reload
+  //   try {
+  //     await Supabase.instance.client
+  //         .from('banners')
+  //         .update({'is_active': true})
+  //         .eq('id', id);
+  //         Get.back();
+  //             onRefresh!(); // trigger data reload
 
-    } catch (e) {
-      print('inactive error' +e.toString());
-    }
-  }
+  //   } catch (e) {
+  //     print('inactive error' +e.toString());
+  //   }
+  // }
 }

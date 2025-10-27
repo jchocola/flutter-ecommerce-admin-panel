@@ -229,7 +229,7 @@ class _GeneralSettingsState extends State<GeneralSettings> {
                 Navigator.of(context).pop();
                 generalController.appColor.value = colorToHex(currentColor);
 
-                generalController.updateAppColor();
+                //generalController.updateAppColor();
 
                 generalController.hasColorChanged.value == true;
               },
@@ -783,7 +783,7 @@ class TGeneralSettingDesktop extends StatelessWidget {
               children: [
                 const SizedBox(width: TSizes.spaceBetwwenItems),
                 GestureDetector(
-                  onTap: () => controller.updateAppConfig(),
+                //  onTap: () => controller.updateAppConfig(),
                   child: Container(
                     decoration: BoxDecoration(
                       color: TColors.primary,

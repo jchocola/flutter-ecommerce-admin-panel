@@ -46,14 +46,14 @@ class _EditCategoryFormState extends State<EditCategoryForm> {
 
   Future<void> _fetchTabs() async {
     try {
-      final data = await controller.supabase
-          .from('tab_config')
-          .select()
-          .order('title');
-      final tabs = (data as List)
-          .map((e) => TabModel.fromJson(e as Map<String, dynamic>))
-          .toList();
-      _tabs.assignAll(tabs);
+      // final data = await controller.supabase
+      //     .from('tab_config')
+      //     .select()
+      //     .order('title');
+      // final tabs = (data as List)
+      //     .map((e) => TabModel.fromJson(e as Map<String, dynamic>))
+      //     .toList();
+      //_tabs.assignAll(tabs);
     } catch (e) {
       print("Failed to load tabs: $e");
     }

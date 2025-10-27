@@ -43,16 +43,16 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
 
   Future<void> _fetchHomeTabs() async {
     try {
-      final data = await controller.supabase
-          .from('tab_config')
-          .select()
-          .eq('tab_location', 'home')
-          .order('title');
-      final tabs =
-          (data as List)
-              .map((e) => TabModel.fromJson(e as Map<String, dynamic>))
-              .toList();
-      _tabsHome.assignAll(tabs);
+      // final data = await controller.supabase
+      //     .from('tab_config')
+      //     .select()
+      //     .eq('tab_location', 'home')
+      //     .order('title');
+      // final tabs =
+      //     (data as List)
+      //         .map((e) => TabModel.fromJson(e as Map<String, dynamic>))
+      //         .toList();
+     // _tabsHome.assignAll(tabs);
     } catch (e) {
       print("Failed to load tabs: $e");
     }
@@ -60,16 +60,16 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
 
   Future<void> _fetchStoreTabs() async {
     try {
-      final data = await controller.supabase
-          .from('tab_config')
-          .select()
-          .eq('tab_location', 'store')
-          .order('title');
-      final tabs =
-          (data as List)
-              .map((e) => TabModel.fromJson(e as Map<String, dynamic>))
-              .toList();
-      _tabsStore.assignAll(tabs);
+      // final data = await controller.supabase
+      //     .from('tab_config')
+      //     .select()
+      //     .eq('tab_location', 'store')
+      //     .order('title');
+      // final tabs =
+      //     (data as List)
+      //         .map((e) => TabModel.fromJson(e as Map<String, dynamic>))
+      //         .toList();
+      //_tabsStore.assignAll(tabs);
     } catch (e) {
       print("Failed to load tabs: $e");
     }

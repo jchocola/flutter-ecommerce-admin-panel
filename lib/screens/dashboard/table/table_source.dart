@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+//import 'package:supabase_flutter/supabase_flutter.dart';
 
 class OrderRows extends DataTableSource {
   List<Map<String, dynamic>> orders = [];
@@ -29,16 +29,16 @@ class OrderRows extends DataTableSource {
   _loading = true;
   notifyListeners();
 
-  final supabase = Supabase.instance.client;
-  final response = await supabase.from('orders').select();
+ // final supabase = Supabase.instance.client;
+  //final response = await supabase.from('orders').select();
 
   // response here is dynamic — usually a List<Map<String, dynamic>>
-  if (response != null) {
-    // If response is a list, assign it directly
-    orders = List<Map<String, dynamic>>.from(response);
-  } else {
-    orders = [];
-  }
+  // if (response != null) {
+  //   // If response is a list, assign it directly
+  //   orders = List<Map<String, dynamic>>.from(response);
+  // } else {
+  //   orders = [];
+  // }
 
   _loading = false;
   notifyListeners();

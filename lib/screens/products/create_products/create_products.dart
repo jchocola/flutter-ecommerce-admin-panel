@@ -6,7 +6,6 @@ import 'package:admin_panel/screens/products/create_products/responsive_design/c
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CreateProductsScreen extends StatefulWidget {
   const CreateProductsScreen({super.key});
@@ -26,12 +25,12 @@ void initState() {
 }
 
 void _loadCurrentUser() async {
-  final currentUser = Supabase.instance.client.auth.currentUser;
-  if (currentUser != null) {
-    await controller.getUser(currentUser.email!);
-  } else {
-    print('🔴 No authenticated user found.');
-  }
+  //final currentUser = Supabase.instance.client.auth.currentUser;
+  // if (currentUser != null) {
+  //   await controller.getUser(currentUser.email!);
+  // } else {
+  //   print('🔴 No authenticated user found.');
+  // }
 }
   @override
   Widget build(BuildContext context) {

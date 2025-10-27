@@ -9,7 +9,7 @@ import 'package:admin_panel/util/routes/routes.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+// import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:admin_panel/common/widgets/buttons/tab_action_button.dart';
 import 'package:admin_panel/common/widgets/roundend_styles/t_rounded_image.dart';

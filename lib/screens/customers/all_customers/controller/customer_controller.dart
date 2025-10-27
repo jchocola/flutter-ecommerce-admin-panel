@@ -3,15 +3,14 @@ import 'package:admin_panel/util/models/customer_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:supabase_flutter/supabase_flutter.dart';
+// import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 class CustomerController extends GetxController {
   static CustomerController get instance => Get.find();
 
-  final supabase = Supabase.instance.client;
+  //final supabase = Supabase.instance.client;
   final RxList<Map<String, dynamic>> customers = <Map<String, dynamic>>[].obs;
-
 
   final isLoading = true.obs;
 
@@ -159,97 +158,125 @@ class CustomerController extends GetxController {
 
   //Supabase Functions
 
-Future<void> fetchCustomers() async {
-  final response = await Supabase.instance.client
-      .from('customers')
-      .select()
-      .order('created_at', ascending: false);
+  Future<void> fetchCustomers() async {
+    // final response = await Supabase.instance.client
+    //     .from('customers')
+    //     .select()
+    //     .order('created_at', ascending: false);
 
-  customers.value = List<Map<String, dynamic>>.from(response);
-  allCustomers.assignAll(customers);
-  filterCustomer.assignAll(customers);  // <-- Initial filtered list
-  isLoading.value = false;
-}
-
-void filterCustomersByQuery(String query) {
-  final search = query.trim().toLowerCase();
-  if (search.isEmpty) {
-    filterCustomer.assignAll(allCustomers);
-  } else {
-    filterCustomer.assignAll(
-      allCustomers.where((customer) {
-        final name = (customer['customerName'] ?? '').toString().toLowerCase();
-        return name.contains(search);
-      }).toList(),
-    );
+    //customers.value = List<Map<String, dynamic>>.from(response);
+    allCustomers.assignAll(customers);
+    filterCustomer.assignAll(customers); // <-- Initial filtered list
+    isLoading.value = false;
   }
-}
 
-void resetSearch() {
-  filterCustomer.assignAll(allCustomers);
-}
-
-
-Future<CustomerModel?> getCustomerById(String customerId) async {
-  try {
-    final response = await supabase
-        .from('customers')
-        .select()
-        .eq('customerID', customerId)
-        .maybeSingle();  // gets a single row or null
-
-    if (response != null) {
-      return CustomerModel.fromJson(response);
+  void filterCustomersByQuery(String query) {
+    final search = query.trim().toLowerCase();
+    if (search.isEmpty) {
+      filterCustomer.assignAll(allCustomers);
     } else {
-      print('❌ No customer found with ID: $customerId');
+      filterCustomer.assignAll(
+        allCustomers.where((customer) {
+          final name =
+              (customer['customerName'] ?? '').toString().toLowerCase();
+          return name.contains(search);
+        }).toList(),
+      );
+    }
+  }
+
+  void resetSearch() {
+    filterCustomer.assignAll(allCustomers);
+  }
+
+  Future<CustomerModel?> getCustomerById(String customerId) async {
+    try {
+      // final response = await supabase
+      //     .from('customers')
+      //     .select()
+      //     .eq('customerID', customerId)
+      //     .maybeSingle();  // gets a single row or null
+
+      // if (response != null) {
+      //   return CustomerModel.fromJson(response);
+      // } else {
+      //   print('❌ No customer found with ID: $customerId');
+      //   return null;
+      // }
+    } catch (e) {
+      print('❌ Error fetching customer by ID: $e');
       return null;
     }
-  } catch (e) {
-    print('❌ Error fetching customer by ID: $e');
-    return null;
   }
-}
-
-
 
   Future<void> checkAndCreateCustomer() async {
+    final shippingAddress = AddressModel(
+      id: Uuid().v4(),
+      name: customerNameController.text.toString(),
+      phone: customerPhoneNumberController.text.toString(),
+      street: shippingStreetController.text.toString(),
+      postalCode: 'postalCode',
+      city: shippingCityController.text.toString(),
+      state: shippingStateController.text.toString(),
+      country: shippingCountryController.text.toString(),
+    );
+    final billingAddress = AddressModel(
+      id: Uuid().v4(),
+      name: customerNameController.text.toString(),
+      phone: customerPhoneNumberController.text.toString(),
+      street: billingStreetController.text.toString(),
+      postalCode: 'postalCode',
+      city: billingCityController.text.toString(),
+      state: billingStateController.text.toString(),
+      country: billingCountryController.text.toString(),
+    );
 
-    final shippingAddress= AddressModel(id: Uuid().v4(), name: customerNameController.text.toString(), phone: customerPhoneNumberController.text.toString(), street: shippingStreetController.text.toString(), postalCode: 'postalCode', city: shippingCityController.text.toString(), state: shippingStateController.text.toString(), country: shippingCountryController.text.toString());
-        final billingAddress= AddressModel(id: Uuid().v4(), name: customerNameController.text.toString(), phone: customerPhoneNumberController.text.toString(), street: billingStreetController.text.toString(), postalCode: 'postalCode', city: billingCityController.text.toString(), state: billingStateController.text.toString(), country: billingCountryController.text.toString());
-
-    final customer = CustomerModel(customerID: Uuid().v4(), customerName: customerNameController.text.toString(), customerPhoneNumber: customerPhoneNumberController.text.toString(), customerEmail: customerEmailController.text.toString(), totalOrder: '', totalSpent: 'totalSpent', currentOrders: 'currentOrders', created_at: DateTime.now(), customerImage: 'No Image', shippingAddress: [shippingAddress], billingAddress: [billingAddress]);
+    final customer = CustomerModel(
+      customerID: Uuid().v4(),
+      customerName: customerNameController.text.toString(),
+      customerPhoneNumber: customerPhoneNumberController.text.toString(),
+      customerEmail: customerEmailController.text.toString(),
+      totalOrder: '',
+      totalSpent: 'totalSpent',
+      currentOrders: 'currentOrders',
+      created_at: DateTime.now(),
+      customerImage: 'No Image',
+      shippingAddress: [shippingAddress],
+      billingAddress: [billingAddress],
+    );
     try {
-      final response =
-          await supabase
-              .from('customers')
-              .select('customerID')
-              .eq('customerEmail', customerEmailController.text.toString()!)
-              .maybeSingle();
+      // final response =
+      //     await supabase
+      //         .from('customers')
+      //         .select('customerID')
+      //         .eq('customerEmail', customerEmailController.text.toString()!)
+      //         .maybeSingle();
 
-      if (response != null) {
-        print('🟢 Customer already exists:');
-      } else {
-        // Insert new customer
-        final insertResponse = await supabase
-            .from('customers')
-            .insert(customer.toJson());
+      // if (response != null) {
+      //   print('🟢 Customer already exists:');
+      // } else {
+      //   // Insert new customer
+      //   final insertResponse = await supabase
+      //       .from('customers')
+      //       .insert(customer.toJson());
 
-        print('✅ New customer created: ');
-      }
+      //   print('✅ New customer created: ');
+      // }
     } catch (e) {
       print('❌ Error in checkAndCreateCustomer: $e');
     }
   }
 
   Future<bool> checkCustomerExist(String id) async {
-    final response =
-        await supabase
-            .from('customers')
-            .select('customerID')
-            .eq('customerID', id)
-            .maybeSingle();
+    // final response =
+    //     await supabase
+    //         .from('customers')
+    //         .select('customerID')
+    //         .eq('customerID', id)
+    //         .maybeSingle();
 
-    return response != null;
+    //  return response != null;
+    return false;
   }
 
   Future<void> addCustomer(String id) async {
@@ -262,22 +289,20 @@ Future<CustomerModel?> getCustomerById(String customerId) async {
       totalSpent: 'totalSpent',
       currentOrders: 'currentOrders',
       created_at: DateTime.now(),
-      customerImage: 'No Image'
+      customerImage: 'No Image',
     );
     print(id);
     try {
-      final response = await supabase
-          .from('customers')
-          .insert(newCustomer.toJson());
+      // final response = await supabase
+      //     .from('customers')
+      //     .insert(newCustomer.toJson());
     } catch (e) {
       print("🎫🎫 ${e.toString()}");
     }
   }
 
-  final RxList<Map<String, dynamic>> allCustomers = <Map<String, dynamic>>[].obs;
-  final RxList<Map<String, dynamic>> filterCustomer = <Map<String, dynamic>>[].obs;
-
-
-
-
+  final RxList<Map<String, dynamic>> allCustomers =
+      <Map<String, dynamic>>[].obs;
+  final RxList<Map<String, dynamic>> filterCustomer =
+      <Map<String, dynamic>>[].obs;
 }

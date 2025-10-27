@@ -10,7 +10,6 @@ import 'package:admin_panel/util/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TSidebar extends StatefulWidget {
   const TSidebar({super.key});
@@ -25,22 +24,22 @@ class _TSidebarState extends State<TSidebar> {
   @override
   void initState() {
     super.initState();
-    _loadCurrentUser();
+
   }
 
-  void _loadCurrentUser() async {
-    final currentUser = Supabase.instance.client.auth.currentUser;
-    if (currentUser != null) {
-      await controllerHed.getUser(currentUser.email!);
-    } else {
-      print('🔴 No authenticated user found.');
-    }
-  }
+  // void _loadCurrentUser() async {
+  //   final currentUser = Supabase.instance.client.auth.currentUser;
+  //   if (currentUser != null) {
+  //     await controllerHed.getUser(currentUser.email!);
+  //   } else {
+  //     print('🔴 No authenticated user found.');
+  //   }
+  // }
 
-  bool _canAccessMenu(String? userRole, List<String> allowedRoles) {
-    if (userRole == null) return false;
-    return allowedRoles.contains(userRole);
-  }
+  // bool _canAccessMenu(String? userRole, List<String> allowedRoles) {
+  //   if (userRole == null) return false;
+  //   return allowedRoles.contains(userRole);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -102,20 +101,20 @@ class _TSidebarState extends State<TSidebar> {
                         route: TRoutes.banners,
                         icon: Iconsax.bookmark,
                         itemname: 'Banners',
-                        isEnabled: !_canAccessMenu(userRole, ['Order Manager', 'Product Manager','Store Admin']),
+                       // isEnabled: !_canAccessMenu(userRole, ['Order Manager', 'Product Manager','Store Admin']),
                       ),
                         TMenuItem(
                         route: TRoutes.tabs,
                         icon: Iconsax.tag,
                         itemname: 'Tabs',
-                        isEnabled: !_canAccessMenu(userRole, ['Product Manager','Order Manager']),
+                       // isEnabled: !_canAccessMenu(userRole, ['Product Manager','Order Manager']),
                       ),
 
                        TMenuItem(
                         route: TRoutes.categories,
                         icon: Iconsax.category,
                         itemname: 'Category',
-                        isEnabled: !_canAccessMenu(userRole, ['Product Manager','Order Manager',]),
+                        //isEnabled: !_canAccessMenu(userRole, ['Product Manager','Order Manager',]),
                       ),
 
                       // Orders: Disabled for Product Manager, Marketing Manager
@@ -123,7 +122,7 @@ class _TSidebarState extends State<TSidebar> {
                         route: TRoutes.orders,
                         icon: Iconsax.box,
                         itemname: 'Orders',
-                        isEnabled: !_canAccessMenu(userRole, ['Product Manager', 'Marketing Manager']),
+                       // isEnabled: !_canAccessMenu(userRole, ['Product Manager', 'Marketing Manager']),
                       ),
 
                       // Products: Only allow Super Admin and Store Admin
@@ -131,7 +130,7 @@ class _TSidebarState extends State<TSidebar> {
                         route: TRoutes.products,
                         icon: Iconsax.box,
                         itemname: 'Products',
-                        isEnabled: _canAccessMenu(userRole, ['Super Admin', 'Store Admin', 'Product Manager']),
+                       // isEnabled: _canAccessMenu(userRole, ['Super Admin', 'Store Admin', 'Product Manager']),
                       ),
 
                       // Customers: Allow all except Order Manager
@@ -139,7 +138,7 @@ class _TSidebarState extends State<TSidebar> {
                         route: TRoutes.customers,
                         icon: Iconsax.activity,
                         itemname: 'Customers',
-                        isEnabled: !_canAccessMenu(userRole, ['Order Manager','Marketing Manager','Product Manager']),
+                       // isEnabled: !_canAccessMenu(userRole, ['Order Manager','Marketing Manager','Product Manager']),
                       ),
 
                       SizedBox(height: TSizes.spaceBetwwenSections),
@@ -157,7 +156,7 @@ class _TSidebarState extends State<TSidebar> {
                         route: TRoutes.settings,
                         icon: Iconsax.setting,
                         itemname: 'Settings',
-                        isEnabled: _canAccessMenu(userRole, ['Super Admin']),
+                       // isEnabled: _canAccessMenu(userRole, ['Super Admin']),
                       ),
 
                       // Product Settings: Only Super Admin and Store Admin
@@ -165,7 +164,7 @@ class _TSidebarState extends State<TSidebar> {
                         route: TRoutes.product_settings,
                         icon: Iconsax.box,
                         itemname: 'Product Settings',
-                        isEnabled: _canAccessMenu(userRole, ['Super Admin', 'Store Admin']),
+                        //isEnabled: _canAccessMenu(userRole, ['Super Admin', 'Store Admin']),
                       ),
                     ],
                   ),

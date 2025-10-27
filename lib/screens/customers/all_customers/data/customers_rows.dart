@@ -8,7 +8,7 @@ import 'package:admin_panel/common/widgets/roundend_styles/t_rounded_image.dart'
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 class CustomersRows extends DataTableSource {
   final List<Map<String, dynamic>> customers;

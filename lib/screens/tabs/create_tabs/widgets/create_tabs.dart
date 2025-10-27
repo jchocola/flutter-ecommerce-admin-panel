@@ -5,7 +5,6 @@ import 'package:admin_panel/util/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:admin_panel/common/widgets/roundend_styles/t_rounded_container.dart';
 import 'package:admin_panel/util/constants/colors.dart';
 import 'package:admin_panel/util/constants/sizes.dart';
@@ -54,21 +53,21 @@ class _CreateTabsFormState extends State<CreateTabsForm> {
   }
 
   Future<void> loadCategories() async {
-    final response = await Supabase.instance.client
-        .from('tab_categories')
-        .select()
-        .order('title', ascending: true);
-    final data = List<Map<String, dynamic>>.from(response);
+    // final response = await Supabase.instance.client
+    //     .from('tab_categories')
+    //     .select()
+    //     .order('title', ascending: true);
+    // final data = List<Map<String, dynamic>>.from(response);
 
     setState(() {
-      categories = data;
+      // categories = data;
 
-      // Preselect categories where tab_id matches current tabId
-      selectedCategoryIds =
-          data
-              .where((cat) => cat['tab_id']?.toString() == widget.tabId)
-              .map((cat) => cat['id'].toString())
-              .toSet();
+      // // Preselect categories where tab_id matches current tabId
+      // selectedCategoryIds =
+      //     data
+      //         .where((cat) => cat['tab_id']?.toString() == widget.tabId)
+      //         .map((cat) => cat['id'].toString())
+      //         .toSet();
     });
   }
 
@@ -89,36 +88,36 @@ Future<void> updateTab() async {
 
   try {
     // 1. Update tab_config
-    await Supabase.instance.client
-        .from('tab_config')
-        .update({
-          'title': tabName,
-          'tab_location': _selectedTabLocation,
-        })
-        .eq('id', widget.tabId);
+    // await Supabase.instance.client
+    //     .from('tab_config')
+    //     .update({
+    //       'title': tabName,
+    //       'tab_location': _selectedTabLocation,
+    //     })
+    //     .eq('id', widget.tabId);
 
-    // 2. Update selected categories
-    if (selectedCategoryIds.isNotEmpty) {
-      await Supabase.instance.client
-          .from('tab_categories')
-          .update({'tab_id': widget.tabId})
-          .inFilter('id', selectedCategoryIds.toList());
-    }
+    // // 2. Update selected categories
+    // if (selectedCategoryIds.isNotEmpty) {
+    //   await Supabase.instance.client
+    //       .from('tab_categories')
+    //       .update({'tab_id': widget.tabId})
+    //       .inFilter('id', selectedCategoryIds.toList());
+    // }
 
-    if (mounted) {
-         final logController  = Get.put(UserActivityController());
+    // if (mounted) {
+    //      final logController  = Get.put(UserActivityController());
 
-     logController.updateUserLog('Tab', 'Tab Updated');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Tab "$tabName" updated')),
-      );
-    }
+    //  logController.updateUserLog('Tab', 'Tab Updated');
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(content: Text('Tab "$tabName" updated')),
+    //   );
+    // }
 
-    // ✅ Return to previous screen and trigger refresh
-    Get.back(result: true);
-    final controller = Get.put(TabsController());
+    // // ✅ Return to previous screen and trigger refresh
+    // Get.back(result: true);
+    // final controller = Get.put(TabsController());
 
-    controller.fetchTabs();
+    // controller.fetchTabs();
   } catch (e) {
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -148,49 +147,49 @@ Future<void> updateTab() async {
 
     try {
       // 1. Insert new tab in tab_config
-      final insertResponse =
-          await Supabase.instance.client
-              .from('tab_config')
-              .insert({
-                'title': tabName,
-                'is_active': true,
-                'tab_location': _selectedTabLocation,
-                'order': 1, // change as needed
+    //   final insertResponse =
+    //       await Supabase.instance.client
+    //           .from('tab_config')
+    //           .insert({
+    //             'title': tabName,
+    //             'is_active': true,
+    //             'tab_location': _selectedTabLocation,
+    //             'order': 1, // change as needed
                 
-              })
-              .select()
-              .single();
+    //           })
+    //           .select()
+    //           .single();
 
-      final String newTabId = insertResponse['id']?.toString() ?? '';
+    //   final String newTabId = insertResponse['id']?.toString() ?? '';
 
-      if (newTabId.isEmpty) {
-        throw Exception('Failed to get new tab id');
-      }
-         final logController  = Get.put(UserActivityController());
+    //   if (newTabId.isEmpty) {
+    //     throw Exception('Failed to get new tab id');
+    //   }
+    //      final logController  = Get.put(UserActivityController());
 
-     logController.updateUserLog('Tab', 'Tab Created');
-      // 2. Update selected categories to link to this tab_id
-      await Supabase.instance.client
-          .from('tab_categories')
-          .update({'tab_id': newTabId})
-          .filter('id', 'in', selectedCategoryIds.toList());
+    //  logController.updateUserLog('Tab', 'Tab Created');
+    //   // 2. Update selected categories to link to this tab_id
+    //   await Supabase.instance.client
+    //       .from('tab_categories')
+    //       .update({'tab_id': newTabId})
+    //       .filter('id', 'in', selectedCategoryIds.toList());
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Tab "$tabName" created with ${selectedCategoryIds.length} categories',
-          ),
-        ),
-      );
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(
+    //       content: Text(
+    //         'Tab "$tabName" created with ${selectedCategoryIds.length} categories',
+    //       ),
+    //     ),
+    //   );
 
-      _tabNameController.clear();
-      setState(() {
-        selectedCategoryIds.clear();
+    //   _tabNameController.clear();
+    //   setState(() {
+    //     selectedCategoryIds.clear();
         
-      });
-       loadCategories();
-      Get.back();
-      // Reload categories after update
+    //   });
+    //    loadCategories();
+    //   Get.back();
+    //   // Reload categories after update
      
     } catch (e) {
       ScaffoldMessenger.of(

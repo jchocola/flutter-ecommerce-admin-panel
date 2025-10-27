@@ -1,11 +1,11 @@
 import 'package:admin_panel/screens/layouts/headers/controller/header_controller.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 class RolesController extends GetxController {
   static RolesController get instance => Get.find();
 
-  final supabase = Supabase.instance.client;
+ // final supabase = Supabase.instance.client;
 
   // Observable list of users fetched from Supabase
   final users = <Map<String, dynamic>>[].obs;
@@ -29,25 +29,25 @@ class RolesController extends GetxController {
 
   Future<void> fetchUsers() async {
   try {
-    final data = await supabase
-        .from('dashboard_users')
-        .select('email, role, created_at, name, created_at');
+    // final data = await supabase
+    //     .from('dashboard_users')
+    //     .select('email, role, created_at, name, created_at');
 
-    // data is List<dynamic>
-    users.value = (data as List).cast<Map<String, dynamic>>();
+    // // data is List<dynamic>
+    // users.value = (data as List).cast<Map<String, dynamic>>();
 
-    // Initialize selectedRoles from fetched data
-    for (var user in users) {
-      final email = user['email'] as String?;
-      final name = user['name'] as String?;
+    // // Initialize selectedRoles from fetched data
+    // for (var user in users) {
+    //   final email = user['email'] as String?;
+    //   final name = user['name'] as String?;
 
-      final role = user['role'] as String? ?? roles.first;
-      if (email != null) {
-        selectedRoles[email] = role;
-      }
-      final headerController = Get.put(HeaderController());
-      headerController.getUser(email!);
-    }
+    //   final role = user['role'] as String? ?? roles.first;
+    //   if (email != null) {
+    //     selectedRoles[email] = role;
+    //   }
+    //   final headerController = Get.put(HeaderController());
+    //   headerController.getUser(email!);
+    // }
   } catch (e) {
     Get.snackbar('Error', e.toString());
   }
@@ -56,9 +56,9 @@ class RolesController extends GetxController {
 
 Future<void> updateRole(String role, String email) async {
   try{
-    final updateRole = await supabase.from('dashboard_users').update({'role' : role}).eq('email', email);
+    // final updateRole = await supabase.from('dashboard_users').update({'role' : role}).eq('email', email);
 
-    Get.snackbar('✅ Updated', '$role updated');
+    // Get.snackbar('✅ Updated', '$role updated');
   }catch (e) {
     print('🔴🔴🔴🔴 ${e.toString()}');
   }

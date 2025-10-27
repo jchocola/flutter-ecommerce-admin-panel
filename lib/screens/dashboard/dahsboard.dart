@@ -7,7 +7,7 @@ import 'package:admin_panel/screens/dashboard/responsive_screens/desktop_tablet.
 import 'package:admin_panel/screens/layouts/site_layout.dart';
 import 'package:admin_panel/util/routes/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+// import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:get/get.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -15,11 +15,11 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final session = Supabase.instance.client.auth.currentSession;
-      if (session == null) {
-      Future.microtask(() => Get.offAllNamed(TRoutes.login));
-      return const SizedBox();
-    }
+    // final session = Supabase.instance.client.auth.currentSession;
+    //   if (session == null) {
+    //   Future.microtask(() => Get.offAllNamed(TRoutes.login));
+    //   return const SizedBox();
+    // }
     return TSiteTemplate(useLayout: false, desktop: DesktopLayout(body: DashboardDesktopScreen(),), tablet: TabletLayout(body: DashBoardTabletScreen(),), mobile:  MobileLayout(body: DashBoardMobileScreen(),),);
   }
 }

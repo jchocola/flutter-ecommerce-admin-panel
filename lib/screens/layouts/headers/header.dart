@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+//import 'package:supabase_flutter/supabase_flutter.dart';
 
 class THeader extends StatefulWidget implements PreferredSizeWidget {
   THeader({super.key, this.scaffoldKey});
@@ -37,12 +37,12 @@ void initState() {
 }
 
 void _loadCurrentUser() async {
-  final currentUser = Supabase.instance.client.auth.currentUser;
-  if (currentUser != null) {
-    await controller.getUser(currentUser.email!);
-  } else {
-    print('🔴 No authenticated user found.');
-  }
+  // final currentUser = Supabase.instance.client.auth.currentUser;
+  // if (currentUser != null) {
+  //   await controller.getUser(currentUser.email!);
+  // } else {
+  //   print('🔴 No authenticated user found.');
+  // }
 }
 
 
@@ -143,7 +143,7 @@ String _getGreeting() {
                GestureDetector(
                onTap: () async {
   try {
-    await Supabase.instance.client.auth.signOut();
+   // await Supabase.instance.client.auth.signOut();
 
     /// Reset the HeaderController user observable
     final headerController = Get.find<HeaderController>();

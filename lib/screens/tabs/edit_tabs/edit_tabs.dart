@@ -4,7 +4,7 @@ import 'package:admin_panel/screens/tabs/edit_tabs/responsive_design/edit_tabs_m
 import 'package:admin_panel/screens/tabs/edit_tabs/responsive_design/edit_tabs_tablet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class EditTabsScreen extends StatefulWidget {
   const EditTabsScreen({super.key});
@@ -25,28 +25,28 @@ class _EditTabsScreenState extends State<EditTabsScreen> {
   }
 
   Future<void> loadTabData() async {
-    final prefs = await SharedPreferences.getInstance();
-    final args = Get.arguments;
+    // final prefs = await SharedPreferences.getInstance();
+    // final args = Get.arguments;
 
-    if (args != null) {
-      tabId = args['tabId'];
-      tabTitle = args['tabTitle'];
+    // if (args != null) {
+    //   tabId = args['tabId'];
+    //   tabTitle = args['tabTitle'];
 
-      await prefs.setString('tabId', tabId!);
-      await prefs.setString('tabTitle', tabTitle!);
-    } else {
-      // Try to read from cache
-      tabId = prefs.getString('tabId');
-      tabTitle = prefs.getString('tabTitle');
-    }
+    //   await prefs.setString('tabId', tabId!);
+    //   await prefs.setString('tabTitle', tabTitle!);
+    // } else {
+    //   // Try to read from cache
+    //   tabId = prefs.getString('tabId');
+    //   tabTitle = prefs.getString('tabTitle');
+    // }
 
-    if (tabId == null || tabTitle == null) {
-      Get.snackbar('Error', 'No Tab data found.');
-    }
+    // if (tabId == null || tabTitle == null) {
+    //   Get.snackbar('Error', 'No Tab data found.');
+    // }
 
-    setState(() {
-      isLoading = false;
-    });
+    // setState(() {
+    //   isLoading = false;
+    // });
   }
 
   @override

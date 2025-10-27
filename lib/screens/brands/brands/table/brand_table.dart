@@ -72,7 +72,7 @@ class BrandTable extends StatelessWidget {
         source: BrandRows(
           brands: brands,
           onDelete: (id) async {
-            await controller.loadBrands();
+           // await controller.loadBrands();
           },
           onEdit: (brand) {
             Get.toNamed('/edit-brand', arguments: brand);

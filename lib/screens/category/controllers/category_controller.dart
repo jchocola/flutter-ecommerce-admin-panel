@@ -4,13 +4,13 @@ import 'package:admin_panel/util/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+//import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 class CategoryController extends GetxController {
   static CategoryController get instance => Get.find();
 
-  final supabase = Supabase.instance.client;
+ // final supabase = Supabase.instance.client;
   final RxList<CategoryModel> categories = <CategoryModel>[].obs;
   final RxList<CategoryModel> selectedCategories = <CategoryModel>[].obs;
 
@@ -25,17 +25,17 @@ class CategoryController extends GetxController {
 /// 
   Future<void> loadCategories() async {
     try {
-      final response = await Supabase.instance.client
-          .from('tab_config')
-        .select()
-        .eq('is_active', true)
-        .eq('tab_location', 'store')
-        .order('order', ascending: true);
+      // final response = await Supabase.instance.client
+      //     .from('tab_config')
+      //   .select()
+      //   .eq('is_active', true)
+      //   .eq('tab_location', 'store')
+      //   .order('order', ascending: true);
 
-      categories.value = response
-          .map((json) => CategoryModel.fromJson(json))
-          .toList();
-print('📦 Supabase raw response: $response');
+//       categories.value = response
+//           .map((json) => CategoryModel.fromJson(json))
+//           .toList();
+// print('📦 Supabase raw response: $response');
 print('✅ Categories loaded: ${categories.length}');
 
       print('✅ Loaded ${categories.length} categories');
@@ -76,10 +76,10 @@ Future<void> updateCategory({
   );
 
   try {
-    await supabase
-        .from('tab_categories')
-        .update(updatedCategory.toJson())
-        .eq('id', id);
+    // await supabase
+    //     .from('tab_categories')
+    //     .update(updatedCategory.toJson())
+    //     .eq('id', id);
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('✅ Category updated')),
@@ -99,10 +99,10 @@ Future<void> updateCategory({
 Future<void> deleteCategory(String tabId) async {
   try {
     // Delete related categories if necessary
-    final deleteCategoriesResponse = await Supabase.instance.client
-      .from('tab_categories')
-      .delete()
-      .eq('id', tabId);
+    // final deleteCategoriesResponse = await Supabase.instance.client
+    //   .from('tab_categories')
+    //   .delete()
+    //   .eq('id', tabId);
 
    
 
@@ -147,7 +147,7 @@ Future<void> deleteCategory(String tabId) async {
     );
 
     try {
-      await supabase.from('tab_categories').insert(category.toJson());
+     // await supabase.from('tab_categories').insert(category.toJson());
       
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -172,17 +172,17 @@ Future<void> fetchCategories() async {
   try {
     isLoading.value = true;
 
-    final response = await supabase
-        .from('tab_categories')
-        .select()
-        .order('created_at', ascending: false);
+    // final response = await supabase
+    //     .from('tab_categories')
+    //     .select()
+    //     .order('created_at', ascending: false);
 
-    final categoryList = (response as List)
-        .map((item) => CategoryModel.fromJson(item))
-        .toList();
+    // final categoryList = (response as List)
+    //     .map((item) => CategoryModel.fromJson(item))
+    //     .toList();
 
-    categories.value = categoryList;
-    allCategories.value = response.cast<Map<String, dynamic>>();
+    // categories.value = categoryList;
+    // allCategories.value = response.cast<Map<String, dynamic>>();
     filterCategories.value = allCategories.toList();
   } catch (e) {
     print('❌ Error fetching categories: $e');

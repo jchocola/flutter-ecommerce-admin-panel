@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:admin_panel/util/models/order_model.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 import 'package:admin_panel/util/formatters/enum.dart';
 
 class DashboardController extends GetxController {
   static DashboardController get to => Get.find();
 
-  final SupabaseClient supabase = Supabase.instance.client;
+
 
   // Observable lists and maps
   final RxList<OrderModel> orders = <OrderModel>[].obs;
@@ -22,80 +22,80 @@ void onInit() {
   super.onInit();
 
   Future.microtask(() async {
-    await fetchOrders();
-    await fetchWeeklySales();
-    listenOrderChanges();
+    // await fetchOrders();
+    // await fetchWeeklySales();
+    // listenOrderChanges();
     getLast7Days();
   });
 }
 
   // Fetch orders once
-  Future<void> fetchOrders() async {
-    try {
-      final data = await supabase
-          .from('orders')
-          .select()
-          .order('orderDate', ascending: false);
+  // Future<void> fetchOrders() async {
+  //   try {
+  //     final data = await supabase
+  //         .from('orders')
+  //         .select()
+  //         .order('orderDate', ascending: false);
 
-      if (data != null) {
-        final list = (data as List)
-            .map((e) => OrderModel.fromJson(e as Map<String, dynamic>))
-            .toList();
-        orders.assignAll(list);
-        _recalculateStats();
-      }
-    } catch (e) {
-      print('Error fetching orders: $e');
-    }
-  }
+  //     if (data != null) {
+  //       final list = (data as List)
+  //           .map((e) => OrderModel.fromJson(e as Map<String, dynamic>))
+  //           .toList();
+  //       orders.assignAll(list);
+  //       _recalculateStats();
+  //     }
+  //   } catch (e) {
+  //     print('Error fetching orders: $e');
+  //   }
+  // }
 final RxBool isCurrentWeek = true.obs;
 
-Future<void> fetchWeeklySales() async {
-  try {
-    final now = DateTime.now();
- final startOfWeek = isCurrentWeek.value
-    ? DateTime(now.year, now.month, now.day).subtract(Duration(days: now.weekday - 1))
-    : DateTime(now.year, now.month, now.day).subtract(Duration(days: now.weekday - 1 + 7));
+// Future<void> fetchWeeklySales() async {
+//   try {
+//     final now = DateTime.now();
+//  final startOfWeek = isCurrentWeek.value
+//     ? DateTime(now.year, now.month, now.day).subtract(Duration(days: now.weekday - 1))
+//     : DateTime(now.year, now.month, now.day).subtract(Duration(days: now.weekday - 1 + 7));
 
-final endOfWeek = startOfWeek.add(const Duration(days: 6, hours: 23, minutes: 59, seconds: 59));
+// final endOfWeek = startOfWeek.add(const Duration(days: 6, hours: 23, minutes: 59, seconds: 59));
 
 
-    final data = await supabase
-      .from('orders')
-      .select('totalPrice, orderDate')
-      .gte('orderDate', startOfWeek.toIso8601String())
-      .lte('orderDate', endOfWeek.toIso8601String());
+//     final data = await supabase
+//       .from('orders')
+//       .select('totalPrice, orderDate')
+//       .gte('orderDate', startOfWeek.toIso8601String())
+//       .lte('orderDate', endOfWeek.toIso8601String());
 
-    final last7Days = List.generate(7, (i) => startOfWeek.add(Duration(days: i)));
+//     final last7Days = List.generate(7, (i) => startOfWeek.add(Duration(days: i)));
 
-    final Map<String, double> dailySales = {
-      for (var date in last7Days) date.toIso8601String().substring(0, 10): 0.0,
-    };
+//     final Map<String, double> dailySales = {
+//       for (var date in last7Days) date.toIso8601String().substring(0, 10): 0.0,
+//     };
 
-    for (final order in data) {
-      final orderDate = DateTime.parse(order['orderDate']);
-      final dateKey = orderDate.toIso8601String().substring(0, 10);
-      final amount = (order['totalPrice'] as num).toDouble();
-      if (dailySales.containsKey(dateKey)) {
-        dailySales[dateKey] = dailySales[dateKey]! + amount;
-      }
-    }
+//     for (final order in data) {
+//       final orderDate = DateTime.parse(order['orderDate']);
+//       final dateKey = orderDate.toIso8601String().substring(0, 10);
+//       final amount = (order['totalPrice'] as num).toDouble();
+//       if (dailySales.containsKey(dateKey)) {
+//         dailySales[dateKey] = dailySales[dateKey]! + amount;
+//       }
+//     }
 
-    final salesList = last7Days.map((date) {
-      final key = date.toIso8601String().substring(0, 10);
-      return dailySales[key] ?? 0;
-    }).toList();
+//     final salesList = last7Days.map((date) {
+//       final key = date.toIso8601String().substring(0, 10);
+//       return dailySales[key] ?? 0;
+//     }).toList();
 
-    weeklySales.assignAll(salesList);
-    this.last7Days.assignAll(last7Days);
-  } catch (e) {
-    print('❌ Exception fetching weekly sales: $e');
-  }
-}
+//     weeklySales.assignAll(salesList);
+//     this.last7Days.assignAll(last7Days);
+//   } catch (e) {
+//     print('❌ Exception fetching weekly sales: $e');
+//   }
+// }
 
 void toggleWeek() {
   isCurrentWeek.toggle();
-  fetchWeeklySales();
+  //fetchWeeklySales();
 }
 
 
@@ -120,21 +120,21 @@ List<DateTime> getPreviousWeekDays() {
 
 
 Timer? _debounceTimer;
-void listenOrderChanges() {
-  _orderStream = supabase
-      .from('orders')
-      .stream(primaryKey: ['id'])
-      .order('orderDate', ascending: false)
-      .limit(100)
-      .listen((updatedOrders) {
-   _debounceTimer?.cancel();
-_debounceTimer = Timer(const Duration(seconds: 1), () async {
-  await fetchOrders();
-  await fetchWeeklySales();
-});
+// void listenOrderChanges() {
+//   _orderStream = supabase
+//       .from('orders')
+//       .stream(primaryKey: ['id'])
+//       .order('orderDate', ascending: false)
+//       .limit(100)
+//       .listen((updatedOrders) {
+//    _debounceTimer?.cancel();
+// _debounceTimer = Timer(const Duration(seconds: 1), () async {
+//   await fetchOrders();
+//   await fetchWeeklySales();
+// });
 
-  });
-}
+//   });
+// }
 
 
 @override

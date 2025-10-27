@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/widgets.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 import 'package:admin_panel/util/models/order_model.dart';
 
 class OrderControllerSearch extends GetxController {
@@ -21,20 +21,20 @@ class OrderControllerSearch extends GetxController {
   Future<void> fetchOrders() async {
     _isLoading.value = true;
 
-    final supabase = Supabase.instance.client;
-    final response = await supabase.from('orders').select();
+   // final supabase = Supabase.instance.client;
+    //final response = await supabase.from('orders').select();
 
-    if (response != null) {
-      allOrders.value = (response as List)
-          .map((order) => OrderModel.fromJson(order))
-          .toList();
-      filterOrders.assignAll(allOrders);
-      print('Orders fetched: ${allOrders.length}');
-    } else {
-      print('No orders found');
-      allOrders.clear();
-      filterOrders.clear();
-    }
+    // if (response != null) {
+    //   allOrders.value = (response as List)
+    //       .map((order) => OrderModel.fromJson(order))
+    //       .toList();
+    //   filterOrders.assignAll(allOrders);
+    //   print('Orders fetched: ${allOrders.length}');
+    // } else {
+    //   print('No orders found');
+    //   allOrders.clear();
+    //   filterOrders.clear();
+    // }
 
     _isLoading.value = false;
   }

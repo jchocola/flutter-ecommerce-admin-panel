@@ -52,7 +52,7 @@ class BannerTable extends StatelessWidget {
           DataColumn2(label: Text('Active')),
           DataColumn2(label: Text('Action'), fixedWidth: 100),
         ],
-        source: BannerRows(banners, controller.fetchBanners),
+        source: BannerRows(banners, () {}),
       );
     });
   }

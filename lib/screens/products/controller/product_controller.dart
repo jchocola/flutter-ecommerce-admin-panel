@@ -1,7 +1,7 @@
 import 'package:admin_panel/util/models/product_model/product_model.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 class ProductsController extends GetxController {
   static ProductsController get instance => Get.find();
@@ -18,17 +18,17 @@ class ProductsController extends GetxController {
   }
 
   Future<bool> deleteProduct(String id) async {
-    final supabase = Supabase.instance.client;
+    //final supabase = Supabase.instance.client;
 
     try {
-      final response = await supabase.from('products').delete().eq('id', id);
+      // final response = await supabase.from('products').delete().eq('id', id);
 
-      if (response.error != null) {
-        print('Delete Failed 🔴: ${response.error!.message}');
-        return false;
-      }
+      // if (response.error != null) {
+      //   print('Delete Failed 🔴: ${response.error!.message}');
+      //   return false;
+      // }
 
-      print('Product deleted ✅');
+      // print('Product deleted ✅');
       return true;
     } catch (e) {
       print('Error 🔴🔴🔴 ${e.toString()}');
@@ -39,10 +39,10 @@ class ProductsController extends GetxController {
   Future<void> fetchProducts() async {
     isLoading.value = true;
     try {
-      final data = await Supabase.instance.client.from('products').select();
-      final fetched = List<Map<String, dynamic>>.from(data);
-      allProducts.assignAll(fetched);
-      filteredProducts.assignAll(fetched);
+      // final data = await Supabase.instance.client.from('products').select();
+      // final fetched = List<Map<String, dynamic>>.from(data);
+      // allProducts.assignAll(fetched);
+      // filteredProducts.assignAll(fetched);
     } catch (e) {
       print('❌ Error fetching products: $e');
       allProducts.clear();
@@ -88,10 +88,10 @@ class ProductsController extends GetxController {
     }
   }
 
-  Future<ProductModel> fetchProductById(String id) async {
-    final supabase = Supabase.instance.client;
-    final response =
-        await supabase.from('products').select().eq('id', id).single();
-    return ProductModel.fromJson(response);
+  Future<ProductModel?> fetchProductById(String id) async {
+    // final supabase = Supabase.instance.client;
+    // final response =
+    //     await supabase.from('products').select().eq('id', id).single();
+    // return ProductModel.fromJson(response);
   }
 }

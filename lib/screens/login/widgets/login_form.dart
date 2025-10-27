@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+//import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TLoginForm extends StatefulWidget {
   const TLoginForm({super.key});
@@ -31,31 +31,31 @@ Future<void> _signIn() async {
 
   try {
     // 1. Check if user exists in dashboard_users
-    final dashboardUser = await Supabase.instance.client
-        .from('dashboard_users')
-        .select()
-        .eq('email', email)
-        .eq('password', password) // Assuming plaintext/hashes match
-        .maybeSingle();
+    // final dashboardUser = await Supabase.instance.client
+    //     .from('dashboard_users')
+    //     .select()
+    //     .eq('email', email)
+    //     .eq('password', password) // Assuming plaintext/hashes match
+    //     .maybeSingle();
 
-    if (dashboardUser == null) {
-      Get.snackbar('Login Failed', 'Account not registered in dashboard_users');
-      return;
-    }
+    // if (dashboardUser == null) {
+    //   Get.snackbar('Login Failed', 'Account not registered in dashboard_users');
+    //   return;
+    // }
 
-    final bool isSignedIn = dashboardUser['signed_in'] ?? false;
+   // final bool isSignedIn = dashboardUser['signed_in'] ?? false;
 
-    if (isSignedIn) {
-      await _performSupabaseLogin(email, password);
-    } else {
-      await _performSupabaseSignup(email, password);
-    }
+    // if (isSignedIn) {
+    //   await _performSupabaseLogin(email, password);
+    // } else {
+    //   await _performSupabaseSignup(email, password);
+    // }
 
     if (Get.isRegistered<HeaderController>()) Get.delete<HeaderController>();
     Get.put(HeaderController());
     Get.offAllNamed(TRoutes.dashboard,);
     final storage = GetStorage();
-    storage.write('email', Supabase.instance.client.auth.currentUser!.email.toString());
+   // storage.write('email', Supabase.instance.client.auth.currentUser!.email.toString());
   } catch (e) {
     Get.snackbar('Error', e.toString(), backgroundColor: Colors.red, colorText: Colors.white);
     print('❌ Error in _signIn: $e');
@@ -66,22 +66,22 @@ Future<void> _signIn() async {
 
 Future<void> _performSupabaseLogin(String email, String password) async {
   try {
-    final loginResponse = await Supabase.instance.client.auth.signInWithPassword(
-      email: email,
-      password: password,
-    );
+    // final loginResponse = await Supabase.instance.client.auth.signInWithPassword(
+    //   email: email,
+    //   password: password,
+    // );
 
-    if (loginResponse.user != null) {
-      await Supabase.instance.client
-          .from('dashboard_users')
-          .update({'auth_id': loginResponse.user!.id})
-          .eq('email', email);
+    // if (loginResponse.user != null) {
+    //   await Supabase.instance.client
+    //       .from('dashboard_users')
+    //       .update({'auth_id': loginResponse.user!.id})
+    //       .eq('email', email);
 
-      print('🟢 Supabase login success');
-    } else {
-      Get.snackbar('Login Failed', 'Invalid Supabase credentials');
-      throw Exception('Login failed');
-    }
+    //   print('🟢 Supabase login success');
+    // } else {
+    //   Get.snackbar('Login Failed', 'Invalid Supabase credentials');
+    //   throw Exception('Login failed');
+    // }
   } catch (e) {
     rethrow;
   }
@@ -89,25 +89,25 @@ Future<void> _performSupabaseLogin(String email, String password) async {
 
 Future<void> _performSupabaseSignup(String email, String password) async {
   try {
-    final signUpResponse = await Supabase.instance.client.auth.signUp(
-      email: email,
-      password: password,
-    );
+    // final signUpResponse = await Supabase.instance.client.auth.signUp(
+    //   email: email,
+    //   password: password,
+    // );
 
-    if (signUpResponse.user != null) {
-      await Supabase.instance.client
-          .from('dashboard_users')
-          .update({
-            'signed_in': true,
-            'auth_id': signUpResponse.user!.id,
-          })
-          .eq('email', email);
+    // if (signUpResponse.user != null) {
+    //   await Supabase.instance.client
+    //       .from('dashboard_users')
+    //       .update({
+    //         'signed_in': true,
+    //         'auth_id': signUpResponse.user!.id,
+    //       })
+    //       .eq('email', email);
 
-      print('🟢 Supabase signup success & signed_in updated');
-    } else {
-      Get.snackbar('Signup Failed', 'Failed to create Supabase account');
-      throw Exception('Signup failed');
-    }
+    //   print('🟢 Supabase signup success & signed_in updated');
+    // } else {
+    //   Get.snackbar('Signup Failed', 'Failed to create Supabase account');
+    //   throw Exception('Signup failed');
+    // }
   } catch (e) {
     // If already registered, fallback to login
     if (e.toString().contains('user_already_exists')) {

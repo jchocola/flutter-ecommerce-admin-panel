@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class BrandRows extends DataTableSource {
   final List<BrandModel> brands;
@@ -30,7 +29,7 @@ class BrandRows extends DataTableSource {
     if (index >= brands.length) return null;
     final brand = brands[index];
 
-    final supabase = Supabase.instance.client;
+    //final supabase = Supabase.instance.client;
 
 String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.parse(brand.createdAt!)); //
     return DataRow2(cells: [
@@ -62,39 +61,39 @@ String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.parse(brand.crea
       ),
 
       /// Category Name
-     DataCell(
-  FutureBuilder(
-    future: supabase
-        .from('tab_categories')
-        .select('title')
-        .eq('id', brand.category)
-        .single(),
-    builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return Chip(
-          label: Text('Loading...'),
-          padding: const EdgeInsets.all(TSizes.xs),
-        );
-      } else if (snapshot.hasError) {
-        return Chip(
-          label: Text('Error'),
-          padding: const EdgeInsets.all(TSizes.xs),
-        );
-      } else if (snapshot.hasData) {
-        final data = snapshot.data as Map<String, dynamic>;
-        return Chip(
-          label: Text(data['title'] ?? 'Unknown'),
-          padding: const EdgeInsets.all(TSizes.xs),
-        );
-      } else {
-        return Chip(
-          label: Text('Unknown'),
-          padding: const EdgeInsets.all(TSizes.xs),
-        );
-      }
-    },
-  ),
-),
+   //  DataCell(
+  // FutureBuilder(
+  //   future: supabase
+  //       .from('tab_categories')
+  //       .select('title')
+  //       .eq('id', brand.category)
+  //       .single(),
+  //   builder: (context, snapshot) {
+  //     if (snapshot.connectionState == ConnectionState.waiting) {
+  //       return Chip(
+  //         label: Text('Loading...'),
+  //         padding: const EdgeInsets.all(TSizes.xs),
+  //       );
+  //     } else if (snapshot.hasError) {
+  //       return Chip(
+  //         label: Text('Error'),
+  //         padding: const EdgeInsets.all(TSizes.xs),
+  //       );
+  //     } else if (snapshot.hasData) {
+  //       final data = snapshot.data as Map<String, dynamic>;
+  //       return Chip(
+  //         label: Text(data['title'] ?? 'Unknown'),
+  //         padding: const EdgeInsets.all(TSizes.xs),
+  //       );
+  //     } else {
+  //       return Chip(
+  //         label: Text('Unknown'),
+  //         padding: const EdgeInsets.all(TSizes.xs),
+  //       );
+  //     }
+  //   },
+  // ),
+//),
 
 
       /// Featured
