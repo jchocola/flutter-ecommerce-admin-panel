@@ -31,9 +31,9 @@ void initState(){
       final data = controller.stats.value;
       final previousData = controller.previousStats.value;
 
-      if (data == null) {
-        return const Center(child: CircularProgressIndicator());
-      }
+      // if (data == null) {
+      //   return const Center(child: CircularProgressIndicator());
+      // }
 
       if(TDeviceUtils.isDesktopScreen(context)) {
       return Row(
@@ -41,38 +41,36 @@ void initState(){
           Expanded(
             child: TDashboardCard(
               title: 'Sales Total',
-              subTitle: data.totalSales.toString(),
-              stats: data.percentageGrowthTotalSales.toInt() ?? 0,
-              lastMonth: previousData!.month,
+              subTitle: 'total order',
+              stats: 100,
+              lastMonth: 'last mont',
             ),
           ),
           SizedBox(width: TSizes.spaceBetwwenItems),
           Expanded(
             child: TDashboardCard(
               title: 'Average Order Value',
-              subTitle: data.totalOrders > 0
-                  ? '$currencySymbol ${(data.totalSales / data.totalOrders).toStringAsFixed(2)}'
-                  : 'N/A',
-              stats: data.percentageGrowthTotalOrders?.toInt() ?? 0,
-              lastMonth: previousData.month,
+              subTitle: '',
+              stats:  0,
+              lastMonth: '',
             ),
           ),
           SizedBox(width: TSizes.spaceBetwwenItems),
           Expanded(
             child: TDashboardCard(
               title: 'Total Orders',
-              subTitle: data.totalOrders.toString(),
-              stats: data.percentageGrowthTotalOrders?.toInt() ?? 0,
-              lastMonth: previousData.month,
+              subTitle: '',
+              stats:  0,
+              lastMonth: '',
             ),
           ),
           SizedBox(width: TSizes.spaceBetwwenItems),
           Expanded(
             child: TDashboardCard(
               title: 'Visitors',
-              subTitle: data.visitors.toString(),
-              stats: data.percentageGrowthVisitors?.toInt() ?? 0,
-              lastMonth: previousData.month,
+              subTitle: '121',
+              stats:  0,
+              lastMonth: '',
             ),
           ),
         ],
@@ -85,20 +83,18 @@ void initState(){
               Expanded(
                 child: TDashboardCard(
                   title: 'Sales Total',
-                  subTitle: data.totalSales.toString(),
-                  stats: data.percentageGrowthTotalSales.toInt() ?? 0,
-                  lastMonth: previousData!.month,
+                  subTitle: '',
+                  stats:  0,
+                  lastMonth: '43',
                 ),
               ),
           SizedBox(width: TSizes.spaceBetwwenItems),
           Expanded(
             child: TDashboardCard(
               title: 'Average Order Value',
-              subTitle: data.totalOrders > 0
-                  ? '$currencySymbol ${(data.totalSales / data.totalOrders).toStringAsFixed(2)}'
-                  : 'N/A',
-              stats: data.percentageGrowthTotalOrders?.toInt() ?? 0,
-              lastMonth: previousData.month,
+              subTitle:'',
+              stats:  0,
+              lastMonth: '43',
             ),
           ),
             ],
@@ -109,18 +105,18 @@ void initState(){
              Expanded(
             child: TDashboardCard(
               title: 'Total Orders',
-              subTitle: data.totalOrders.toString(),
-              stats: data.percentageGrowthTotalOrders?.toInt() ?? 0,
-              lastMonth: previousData.month,
+              subTitle: '',
+              stats: 32,
+              lastMonth: '34',
             ),
           ),
           SizedBox(width: TSizes.spaceBetwwenItems),
           Expanded(
             child: TDashboardCard(
               title: 'Visitors',
-              subTitle: data.visitors.toString(),
-              stats: data.percentageGrowthVisitors?.toInt() ?? 0,
-              lastMonth: previousData.month,
+              subTitle: '32',
+              stats:  0,
+              lastMonth: '34',
             ),
           ),
           ],
@@ -132,32 +128,30 @@ void initState(){
         children: [
           TDashboardCard(
             title: 'Sales Total',
-            subTitle: data.totalSales.toString(),
-            stats: data.percentageGrowthTotalSales.toInt() ?? 0,
-            lastMonth: previousData!.month,
+            subTitle: '',
+            stats: 34,
+            lastMonth: '343',
           ),
           SizedBox(height: TSizes.spaceBetwwenItems),
           TDashboardCard(
             title: 'Average Order Value',
-            subTitle: data.totalOrders > 0
-                ? '$currencySymbol ${(data.totalSales / data.totalOrders).toStringAsFixed(2)}'
-                : 'N/A',
-            stats: data.percentageGrowthTotalOrders?.toInt() ?? 0,
-            lastMonth: previousData.month,
+            subTitle: '',
+            stats:  0,
+            lastMonth: '43',
           ),
           SizedBox(height: TSizes.spaceBetwwenItems),
           TDashboardCard(
             title: 'Total Orders',
-            subTitle: data.totalOrders.toString(),
-            stats: data.percentageGrowthTotalOrders?.toInt() ?? 0,
-            lastMonth: previousData.month,
+            subTitle: '',
+            stats:  0,
+            lastMonth: '43',
           ),
           SizedBox(height: TSizes.spaceBetwwenItems),
           TDashboardCard(
             title: 'Visitors',
-            subTitle: data.visitors.toString(),
-            stats: data.percentageGrowthVisitors?.toInt() ?? 0,
-            lastMonth: previousData.month,
+            subTitle: '56',
+            stats:  0,
+            lastMonth: '3',
           ),
         ],
       );

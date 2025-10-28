@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 class MonthlySalesStats {
- final String month;
+ final String month;    // 
   final double totalSales;
   final int totalOrders;
   double percentageGrowthTotalSales;

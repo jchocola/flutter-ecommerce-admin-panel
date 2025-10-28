@@ -23,6 +23,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       scrollBehavior: const SmoothScrollBehavior(),
       title: TText.appName,
       themeMode: ThemeMode.dark,
