@@ -7,7 +7,7 @@ import 'package:admin_panel/screens/products/controller/product_controller.dart'
 import 'package:admin_panel/screens/products/create_products/controller/create_product_controller.dart';
 import 'package:admin_panel/screens/products/create_products/controller/product_repositpry.dart';
 import 'package:admin_panel/screens/settings/other_screens/set_roles_permission/roles_controller.dart';
-import 'package:admin_panel/screens/tabs/controller/tab_controller.dart';
+
 import 'package:admin_panel/util/constants/supabase.dart';
 import 'package:admin_panel/util/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +31,7 @@ Future<void> main() async {
    Get.lazyPut(() => CreateProductController());
 
 
-Get.lazyPut(() => TabsController());
+//Get.lazyPut(() => TabsController());
 Get.lazyPut(() => MediaController());
 Get.lazyPut(() => ProductsController());
 Get.lazyPut(() => RolesController());
