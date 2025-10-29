@@ -37,10 +37,14 @@ class TRoutes {
 
   static const product_settings = '/product-settings';
 
+  static const discounts = '/discounts';
+
+  static const collections = '/collections';
+
+  static const reviews = '/reviews';
 
   //Create Combo Offer
   static const createCombo = '/createComboOffer';
-
 
   //Order
   static const orders = '/orders';

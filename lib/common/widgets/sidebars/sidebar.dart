@@ -96,28 +96,7 @@ class _TSidebarState extends State<TSidebar> {
                         isEnabled: true,
                       ),
 
-                      // Banners: Only allow if NOT Order Manager or Product Manager
-                      TMenuItem(
-                        route: TRoutes.banners,
-                        icon: Iconsax.bookmark,
-                        itemname: 'Banners',
-                       // isEnabled: !_canAccessMenu(userRole, ['Order Manager', 'Product Manager','Store Admin']),
-                      ),
-                        TMenuItem(
-                        route: TRoutes.tabs,
-                        icon: Iconsax.tag,
-                        itemname: 'Tabs',
-                       // isEnabled: !_canAccessMenu(userRole, ['Product Manager','Order Manager']),
-                      ),
-
-                       TMenuItem(
-                        route: TRoutes.categories,
-                        icon: Iconsax.category,
-                        itemname: 'Category',
-                        //isEnabled: !_canAccessMenu(userRole, ['Product Manager','Order Manager',]),
-                      ),
-
-                      // Orders: Disabled for Product Manager, Marketing Manager
+                       // Orders: Disabled for Product Manager, Marketing Manager
                       TMenuItem(
                         route: TRoutes.orders,
                         icon: Iconsax.box,
@@ -125,21 +104,56 @@ class _TSidebarState extends State<TSidebar> {
                        // isEnabled: !_canAccessMenu(userRole, ['Product Manager', 'Marketing Manager']),
                       ),
 
-                      // Products: Only allow Super Admin and Store Admin
-                      TMenuItem(
-                        route: TRoutes.products,
-                        icon: Iconsax.box,
-                        itemname: 'Products',
-                       // isEnabled: _canAccessMenu(userRole, ['Super Admin', 'Store Admin', 'Product Manager']),
-                      ),
-
-                      // Customers: Allow all except Order Manager
+                                       // Customers: Allow all except Order Manager
                       TMenuItem(
                         route: TRoutes.customers,
                         icon: Iconsax.activity,
                         itemname: 'Customers',
                        // isEnabled: !_canAccessMenu(userRole, ['Order Manager','Marketing Manager','Product Manager']),
                       ),
+
+                      // Banners: Only allow if NOT Order Manager or Product Manager
+                      TMenuItem(
+                        route: TRoutes.discounts,
+                        icon: Iconsax.bookmark,
+                        itemname: 'Discounts',
+                       // isEnabled: !_canAccessMenu(userRole, ['Order Manager', 'Product Manager','Store Admin']),
+                      ),
+                        TMenuItem(
+                        route: TRoutes.reviews,
+                        icon: Iconsax.tag,
+                        itemname: 'Reviews',
+                       // isEnabled: !_canAccessMenu(userRole, ['Product Manager','Order Manager']),
+                      ),
+
+                       TMenuItem(
+                        route: TRoutes.categories,
+                        icon: Iconsax.category,
+                        itemname: 'Categories',
+                        //isEnabled: !_canAccessMenu(userRole, ['Product Manager','Order Manager',]),
+                      ),
+                        TMenuItem(
+                        route: TRoutes.collections,
+                        icon: Iconsax.activity,
+                        itemname: 'Collections',
+                       // isEnabled: !_canAccessMenu(userRole, ['Order Manager','Marketing Manager','Product Manager']),
+                      ),
+                        // Products: Only allow Super Admin and Store Admin
+                      TMenuItem(
+                        route: TRoutes.products,
+                        icon: Iconsax.box,
+                        itemname: 'Products',
+                       // isEnabled: _canAccessMenu(userRole, ['Super Admin', 'Store Admin', 'Product Manager']),
+                      ),
+                     
+                       TMenuItem(
+                        route: TRoutes.banners,
+                        icon: Iconsax.activity,
+                        itemname: 'Banners',
+                       // isEnabled: !_canAccessMenu(userRole, ['Order Manager','Marketing Manager','Product Manager']),
+                      ),
+
+                     
 
                       SizedBox(height: TSizes.spaceBetwwenSections),
 
@@ -160,12 +174,12 @@ class _TSidebarState extends State<TSidebar> {
                       ),
 
                       // Product Settings: Only Super Admin and Store Admin
-                      TMenuItem(
-                        route: TRoutes.product_settings,
-                        icon: Iconsax.box,
-                        itemname: 'Product Settings',
-                        //isEnabled: _canAccessMenu(userRole, ['Super Admin', 'Store Admin']),
-                      ),
+                      // TMenuItem(
+                      //   route: TRoutes.product_settings,
+                      //   icon: Iconsax.box,
+                      //   itemname: 'Product Settings',
+                      //   //isEnabled: _canAccessMenu(userRole, ['Super Admin', 'Store Admin']),
+                      // ),
                     ],
                   ),
                 ),

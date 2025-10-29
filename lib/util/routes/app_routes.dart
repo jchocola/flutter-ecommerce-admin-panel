@@ -10,10 +10,12 @@ import 'package:admin_panel/screens/category/all_categories/category.dart';
 import 'package:admin_panel/screens/category/create_categories/create_categories.dart';
 import 'package:admin_panel/screens/category/create_categories/responive_screens/create_category_desktop.dart';
 import 'package:admin_panel/screens/category/edit_categories/edit_categories.dart';
+import 'package:admin_panel/screens/collections/all_collections/collections.dart';
 import 'package:admin_panel/screens/customers/all_customers/customers.dart';
 import 'package:admin_panel/screens/customers/create_customers/create_customers.dart';
 import 'package:admin_panel/screens/customers/edit_customers/edit_customers.dart';
 import 'package:admin_panel/screens/dashboard/dahsboard.dart';
+import 'package:admin_panel/screens/discounts/all_discounts/discounts.dart';
 import 'package:admin_panel/screens/forgot-password/forgot_password.dart';
 import 'package:admin_panel/screens/login/login.dart';
 import 'package:admin_panel/screens/media/media.dart';
@@ -30,6 +32,7 @@ import 'package:admin_panel/screens/products/edit_products/edit_products.dart';
 import 'package:admin_panel/screens/products/edit_products/responsive_design/edit_products_desktop.dart';
 import 'package:admin_panel/screens/reset-password/reset_password.dart';
 import 'package:admin_panel/screens/restriced/restricted_screen.dart';
+import 'package:admin_panel/screens/reviews/all_reviews/reviews.dart';
 import 'package:admin_panel/screens/settings/other_screens/add_remove_screen/add_remove_users.dart';
 import 'package:admin_panel/screens/settings/other_screens/change_password/change_password.dart';
 import 'package:admin_panel/screens/settings/other_screens/set_roles_permission/set_roles_permission.dart';
@@ -99,6 +102,15 @@ class TAppRoute {
       name: TRoutes.editCustomers,
       page: () => const EditCustomersScreen(),
     ),
+
+    //Discounts
+    GetPage(name: TRoutes.discounts, page: ()=> const DiscountsScreen()),
+
+    //Collections
+    GetPage(name: TRoutes.collections, page: ()=>const CollectionsScreen()),
+
+    //Reviews
+    GetPage(name: TRoutes.reviews, page: ()=> const ReviewsScreen()),
 
     //Tabs
     GetPage(name: TRoutes.tabs, page: () => const TabsScreen()),
