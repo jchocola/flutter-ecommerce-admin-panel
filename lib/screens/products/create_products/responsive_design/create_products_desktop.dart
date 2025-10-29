@@ -155,7 +155,7 @@ class _CreateProductsDesktopState extends State<CreateProductsDesktop> {
                         ),
                         const SizedBox(height: TSizes.spaceBetwwenSections),
 
-                        const ProductBrand(),
+                        //const ProductBrand(),
                         const SizedBox(height: TSizes.spaceBetwwenSections),
 
                         const ProductCategories(),

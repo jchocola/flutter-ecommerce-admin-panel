@@ -2,10 +2,10 @@ import 'package:admin_panel/app.dart';
 import 'package:admin_panel/screens/banners/banners/banners.dart';
 import 'package:admin_panel/screens/banners/create_banners/create_banner.dart';
 import 'package:admin_panel/screens/banners/edit_banners/edit_banners.dart';
-import 'package:admin_panel/screens/brands/brands/brands.dart';
-import 'package:admin_panel/screens/brands/create_brands/create_brands.dart';
-import 'package:admin_panel/screens/brands/create_brands/responsive_design/create_brands_desktop.dart';
-import 'package:admin_panel/screens/brands/edit_brands/edit_brands.dart';
+// import 'package:admin_panel/screens/brands/brands/brands.dart';
+// import 'package:admin_panel/screens/brands/create_brands/create_brands.dart';
+// import 'package:admin_panel/screens/brands/create_brands/responsive_design/create_brands_desktop.dart';
+// import 'package:admin_panel/screens/brands/edit_brands/edit_brands.dart';
 import 'package:admin_panel/screens/category/all_categories/category.dart';
 import 'package:admin_panel/screens/category/create_categories/create_categories.dart';
 import 'package:admin_panel/screens/category/create_categories/responive_screens/create_category_desktop.dart';
@@ -72,9 +72,9 @@ class TAppRoute {
     ),
 
     //Brands
-    GetPage(name: TRoutes.brands, page: () => const BrandsScreen()),
-    GetPage(name: TRoutes.createBrand, page: () => const CreateBrandScreen()),
-    GetPage(name: TRoutes.editBrand, page: () => const EditBrandScreen()),
+    // GetPage(name: TRoutes.brands, page: () => const BrandsScreen()),
+    // GetPage(name: TRoutes.createBrand, page: () => const CreateBrandScreen()),
+    // GetPage(name: TRoutes.editBrand, page: () => const EditBrandScreen()),
 
     //Banners
     GetPage(name: TRoutes.banners, page: () => const BannersScreen()),

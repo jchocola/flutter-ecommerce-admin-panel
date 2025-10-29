@@ -189,7 +189,7 @@ class _EditProductsTabletState extends State<EditProductsTablet> {
                           ),
                         ),
                         const SizedBox(height: TSizes.spaceBetwwenSections),
-                        ProductBrandEdit(selectedBrand: widget.productModel.brand),
+                       // ProductBrandEdit(selectedBrand: widget.productModel.brand),
                         const SizedBox(height: TSizes.spaceBetwwenSections),
                         ProductCategoriesEdit(
                           selectedCategories: widget.productModel.categories,

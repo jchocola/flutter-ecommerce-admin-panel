@@ -136,7 +136,7 @@ class _CreateProductsMobileState extends State<CreateProductsMobile> {
                   ),
                   const SizedBox(height: TSizes.spaceBetwwenSections),
 
-                  const ProductBrand(),
+                 // const ProductBrand(),
                   const SizedBox(height: TSizes.spaceBetwwenSections),
 
                   const ProductCategories(),

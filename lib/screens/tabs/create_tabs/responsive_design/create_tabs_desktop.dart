@@ -1,4 +1,4 @@
-import 'package:admin_panel/screens/brands/create_brands/widgets/brand_form.dart';
+
 import 'package:admin_panel/screens/tabs/create_tabs/widgets/create_tabs.dart';
 import 'package:admin_panel/util/constants/sizes.dart';
 import 'package:flutter/material.dart';

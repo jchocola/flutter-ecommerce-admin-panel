@@ -1,4 +1,4 @@
-import 'package:admin_panel/screens/brands/brands/data/brand_rows.dart';
+
 import 'package:admin_panel/screens/customers/all_customers/data/customers_rows.dart';
 import 'package:admin_panel/screens/dashboard/widgets/paginated_table.dart';
 import 'package:admin_panel/screens/settings/other_screens/set_roles_permission/data/roles_row.dart';

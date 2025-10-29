@@ -1,4 +1,4 @@
-import 'package:admin_panel/screens/brands/brands/data/brand_rows.dart';
+
 import 'package:admin_panel/screens/dashboard/widgets/paginated_table.dart';
 import 'package:admin_panel/screens/tabs/all_tabs/rows/tabs_rows.dart';
 import 'package:admin_panel/screens/tabs/controller/tab_controller.dart';
