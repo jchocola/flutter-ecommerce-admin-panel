@@ -8,8 +8,8 @@ import 'package:admin_panel/util/helpers/helpers_function.dart';
 import 'package:admin_panel/util/device/device_utility.dart';
 import 'package:admin_panel/common/widgets/roundend_styles/t_rounded_container.dart';
 
-class TWeeklySalesBar extends StatelessWidget {
-  const TWeeklySalesBar({super.key});
+class RevenueStatisticBar extends StatelessWidget {
+  const RevenueStatisticBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,39 +27,46 @@ class TWeeklySalesBar extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-          
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Weekly Sales',
+                  'Revenue Analytics',
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
-                  Obx(
-              () => Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap: ()=> controller.toggleWeek(),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: dark ? Colors.white.withOpacity(0.05) : TColors.primary,
-                        border: Border.all(color: dark ? Colors.grey.withOpacity(0.5) : TColors.dark.withOpacity(0.2)),
-                        borderRadius: BorderRadius.circular(5),
+                Obx(
+                  () => Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: () => controller.toggleWeek(),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color:
+                                dark
+                                    ? Colors.white.withOpacity(0.05)
+                                    : TColors.primary,
+                            border: Border.all(
+                              color:
+                                  dark
+                                      ? Colors.grey.withOpacity(0.5)
+                                      : TColors.dark.withOpacity(0.2),
+                            ),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Text(
+                              controller.isCurrentWeek.value
+                                  ? 'Show Previous Week'
+                                  : 'Show Current Week',
+                            ),
+                          ),
+                        ),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Text( controller.isCurrentWeek.value
-                          ? 'Show Previous Week'
-                          : 'Show Current Week'),
-                      ),
-                    ),
+                    ],
                   ),
-                 
-                ],
-              ),
-            ),
+                ),
               ],
             ),
             const SizedBox(height: TSizes.spaceBetwwenSections),
@@ -151,7 +158,7 @@ class TWeeklySalesBar extends StatelessWidget {
         sideTitles: SideTitles(
           showTitles: true,
           reservedSize: 40,
-          
+
           getTitlesWidget: (value, meta) {
             final index = value.toInt();
             if (index < 0 || index >= sortedDays.length)

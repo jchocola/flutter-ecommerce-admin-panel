@@ -1,4 +1,3 @@
-
 import 'package:admin_panel/common/widgets/roundend_styles/t_rounded_container.dart';
 
 import 'package:admin_panel/controllers/dashboard/dashboard_controller.dart';
@@ -8,15 +7,13 @@ import 'package:admin_panel/screens/dashboard/table/data_table.dart';
 import 'package:admin_panel/screens/dashboard/widgets/dasboard_widgets.dart';
 
 import 'package:admin_panel/screens/dashboard/widgets/order_status_pie_chart.dart';
-import 'package:admin_panel/screens/dashboard/widgets/weekly_sales_bar.dart';
+import 'package:admin_panel/screens/dashboard/widgets/renenue_statistic_bar.dart';
 import 'package:admin_panel/util/constants/colors.dart';
 import 'package:admin_panel/util/constants/sizes.dart';
 
 import 'package:admin_panel/util/helpers/helpers_function.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-
 
 class DashboardDesktopScreen extends StatelessWidget {
   const DashboardDesktopScreen({super.key});
@@ -40,12 +37,12 @@ class DashboardDesktopScreen extends StatelessWidget {
               ),
               const SizedBox(height: TSizes.spaceBetwwenSections),
 
-
-
+              // all statistic
               TDasboardCards(),
 
               const SizedBox(height: TSizes.spaceBetwwenSections),
 
+             
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -53,23 +50,36 @@ class DashboardDesktopScreen extends StatelessWidget {
                     flex: 2,
                     child: Column(
                       children: [
-                        RepaintBoundary(child: TWeeklySalesBar()),
+                         // revenue statistic
+                        RepaintBoundary(child: RevenueStatisticBar()),
 
                         SizedBox(height: TSizes.spaceBetwwenSections),
 
                         TRoundedContainer(
-                          backgroundColor: dark ? Colors.white.withOpacity(0.05) : Colors.white ,
+                          backgroundColor:
+                              dark
+                                  ? Colors.white.withOpacity(0.05)
+                                  : Colors.white,
                           showBorder: true,
                           radius: 5,
-                          borderColor: dark ? Colors.grey.withOpacity(0.5) : TColors.dark.withOpacity(0.2),
+                          borderColor:
+                              dark
+                                  ? Colors.grey.withOpacity(0.5)
+                                  : TColors.dark.withOpacity(0.2),
                           child: Padding(
                             padding: const EdgeInsets.all(TSizes.defaultSpace),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Recent Orders', style: Theme.of(context).textTheme.headlineSmall,),
-                                const SizedBox(height: TSizes.spaceBetwwenSections,),
-                                 RepaintBoundary(child: DashboardOrderTable()),
+                                Text(
+                                  'Recent Orders',
+                                  style:
+                                      Theme.of(context).textTheme.headlineSmall,
+                                ),
+                                const SizedBox(
+                                  height: TSizes.spaceBetwwenSections,
+                                ),
+                                RepaintBoundary(child: DashboardOrderTable()),
                               ],
                             ),
                           ),
@@ -79,7 +89,11 @@ class DashboardDesktopScreen extends StatelessWidget {
                   ),
 
                   SizedBox(width: TSizes.spaceBetwwenSections),
-                  Expanded(child: RepaintBoundary(child: OrderStatusPieChart())),
+
+                  // ORDER STATUS PIE CHART
+                  Expanded(
+                    child: RepaintBoundary(child: OrderStatusPieChart()),
+                  ),
                 ],
               ),
             ],
@@ -89,4 +103,3 @@ class DashboardDesktopScreen extends StatelessWidget {
     );
   }
 }
-
