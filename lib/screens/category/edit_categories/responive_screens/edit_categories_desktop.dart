@@ -4,7 +4,7 @@ import 'package:admin_panel/util/constants/sizes.dart';
 import 'package:admin_panel/screens/category/edit_categories/widgets/edit_catogory_form.dart';
 
 class EditCategoriesDesktop extends StatelessWidget {
-  final CategoryModel? category;
+  final CustomCategoryModel? category;
 
   const EditCategoriesDesktop({super.key, required this.category});
 

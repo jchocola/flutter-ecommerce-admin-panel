@@ -9,9 +9,10 @@ import 'package:file_picker/file_picker.dart';
 class CategoryControllerCustom extends GetxController {
   final _categoryRepo = Get.find<CategoryRepository>();
 
-  var pickedFile = Rx<FilePickerResult?>(null);
-  var categoryList = <CustomCategoryModel>[].obs;
-  var isLoading = false.obs;
+  var pickedFile = Rx<FilePickerResult?>(null);    /// image file
+  var categoryList = <CustomCategoryModel>[].obs; /// list of categories
+  var isLoading = false.obs;    /// loading state
+  var editingCategory = CustomCategoryModel().obs;
 
   @override
   void onInit() {
@@ -82,5 +83,9 @@ class CategoryControllerCustom extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  void setEditingCategory(CustomCategoryModel category) {
+    editingCategory.value = category;
   }
 }

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class EditCategoriesMobile extends StatelessWidget {
   const EditCategoriesMobile({super.key, required this.category});
-final CategoryModel category;
+  final CustomCategoryModel category;
   @override
   Widget build(BuildContext context) {
      return Scaffold(

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class EditCategoriesTablet extends StatelessWidget {
   const EditCategoriesTablet({super.key, required this.category});
-final CategoryModel category;
+final CustomCategoryModel category;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

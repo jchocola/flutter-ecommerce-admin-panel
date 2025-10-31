@@ -81,20 +81,30 @@ class CategoryRows extends DataTableSource {
         //DataCell(Text('data')),
         DataCell(
           TTabActionButton(
+            ///
+            ///   EDIT BUTTON
+            ///
             onEditPressed: () async {
-              final box = GetStorage();
-              box.write('cached_category', category.toJson());
+              Get.find<CategoryControllerCustom>().setEditingCategory(category);
+              Get.toNamed(TRoutes.editCategory);
 
-              final result = await Get.toNamed(
-                TRoutes.editCategory,
-                arguments: category,
-              );
-              if (result == true) {
-                final controller = Get.find<CategoryController>();
-                await controller
-                    .fetchCategories(); // Refresh categories list immediately
-              }
+              // final box = GetStorage();
+              // box.write('cached_category', category.toJson());
+
+              // final result = await Get.toNamed(
+              //   TRoutes.editCategory,
+              //   arguments: category,
+              // );
+              // if (result == true) {
+              //   final controller = Get.find<CategoryController>();
+              //   await controller
+              //       .fetchCategories(); // Refresh categories list immediately
+              // }
             },
+
+            ///
+            ///   DELETE BUTTON
+            ///
             onDeletePressed: () {
               TDialogs.defaultDialog(
                 context: Get.context!,

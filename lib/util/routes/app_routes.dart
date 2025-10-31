@@ -38,6 +38,7 @@ import 'package:admin_panel/screens/settings/other_screens/change_password/chang
 import 'package:admin_panel/screens/settings/other_screens/set_roles_permission/set_roles_permission.dart';
 import 'package:admin_panel/screens/settings/other_screens/user_activity_screen/user_activity_screen.dart';
 import 'package:admin_panel/screens/settings/settings.dart';
+import 'package:admin_panel/util/models/category_model.dart';
 // import 'package:admin_panel/screens/tabs/all_tabs/tabs.dart';
 // import 'package:admin_panel/screens/tabs/create_tabs/create_tabs.dart';
 // import 'package:admin_panel/screens/tabs/edit_tabs/edit_tabs.dart';

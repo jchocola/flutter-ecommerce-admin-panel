@@ -18,7 +18,7 @@ import 'package:iconsax/iconsax.dart';
 class EditCategoryForm extends StatefulWidget {
   const EditCategoryForm({super.key, required this.category});
 
-  final CategoryModel category;
+  final CustomCategoryModel category;
 
   @override
   State<EditCategoryForm> createState() => _EditCategoryFormState();
@@ -39,8 +39,8 @@ class _EditCategoryFormState extends State<EditCategoryForm> {
   void initState() {
     super.initState();
     _categoryNameController = TextEditingController(text: widget.category.title);
-    _isFeatured = widget.category.isIcon;
-    _selectedTabId.value = widget.category.tab_id;
+    //_isFeatured = widget.category.isIcon;
+   // _selectedTabId.value = widget.category.tab_id;
     _fetchTabs();
   }
 
@@ -168,7 +168,7 @@ class _EditCategoryFormState extends State<EditCategoryForm> {
             /// Featured Checkbox
             CheckboxListTile(
               title: const Text('Is this Icon? Tick it'),
-              value: _isFeatured,
+              value: true,
               onChanged: (value) {
                 setState(() => _isFeatured = value ?? false);
               },
