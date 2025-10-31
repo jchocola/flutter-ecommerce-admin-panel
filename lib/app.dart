@@ -26,7 +26,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       scrollBehavior: const SmoothScrollBehavior(),
       title: TText.appName,
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.light,
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
       getPages: TAppRoute.page,
