@@ -59,4 +59,20 @@ class CategoryRepository {
       rethrow;
     }
   }
+
+
+  Future<void> updateCategory({required CustomCategoryModel category}) async {
+    try {
+      logger.i('Updating category ${category.title}');
+      await categoryRef.doc(category.id).update(category.toMap());
+
+      logger.i('Category updated');
+
+      // reload categories
+       getCategories();
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
+  }
 }

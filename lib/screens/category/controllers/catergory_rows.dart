@@ -85,7 +85,13 @@ class CategoryRows extends DataTableSource {
             ///   EDIT BUTTON
             ///
             onEditPressed: () async {
+              // set editing category
               Get.find<CategoryControllerCustom>().setEditingCategory(category);
+              
+              // clear picked image
+              Get.find<CategoryControllerCustom>().clearPickedFile();
+              
+              // navigate to edit page
               Get.toNamed(TRoutes.editCategory);
 
               // final box = GetStorage();

@@ -88,4 +88,23 @@ class CategoryControllerCustom extends GetxController {
   void setEditingCategory(CustomCategoryModel category) {
     editingCategory.value = category;
   }
+
+  void clearPickedFile() {
+    pickedFile.value = null;
+  }
+
+
+  Future<void> updateCategory({required CustomCategoryModel category}) async {
+    try {
+      logger.i('Updating category ${category.id}');
+      isLoading.value = true;
+      await _categoryRepo.updateCategory(category: category);
+      // reload categories
+      getAllCategories();
+    } catch (e) {
+      logger.e(e);
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }

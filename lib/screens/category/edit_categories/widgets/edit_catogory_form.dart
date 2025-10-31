@@ -1,5 +1,6 @@
 import 'package:admin_panel/common/widgets/images/image_uploader.dart';
 import 'package:admin_panel/common/widgets/roundend_styles/t_rounded_container.dart';
+import 'package:admin_panel/controllers/category_controller.dart';
 import 'package:admin_panel/screens/category/controllers/category_controller.dart';
 import 'package:admin_panel/screens/media/widgets/media_content.dart';
 import 'package:admin_panel/screens/products/create_products/controller/image_controller.dart';
@@ -11,6 +12,7 @@ import 'package:admin_panel/util/helpers/helpers_function.dart';
 import 'package:admin_panel/util/models/category_model.dart';
 import 'package:admin_panel/util/models/image_model.dart';
 import 'package:admin_panel/util/models/tab_model.dart';
+import 'package:admin_panel/util/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -30,7 +32,8 @@ class _EditCategoryFormState extends State<EditCategoryForm> {
   String? _selectedImageUrl;
   bool? _isFeatured;
 
-  final CategoryController controller = Get.put(CategoryController());
+  final CategoryControllerCustom categoryController =
+      Get.find<CategoryControllerCustom>();
 
   final RxList<TabModel> _tabs = <TabModel>[].obs;
   final RxnString _selectedTabId = RxnString(null); // Nullable reactive string
@@ -38,9 +41,11 @@ class _EditCategoryFormState extends State<EditCategoryForm> {
   @override
   void initState() {
     super.initState();
-    _categoryNameController = TextEditingController(text: widget.category.title);
+    _categoryNameController = TextEditingController(
+      text: widget.category.title,
+    );
     //_isFeatured = widget.category.isIcon;
-   // _selectedTabId.value = widget.category.tab_id;
+    // _selectedTabId.value = widget.category.tab_id;
     _fetchTabs();
   }
 
@@ -59,26 +64,25 @@ class _EditCategoryFormState extends State<EditCategoryForm> {
     }
   }
 
-  void _openImagePicker(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (_) => MediaContent(
-        allowSelection: true,
-        allowMultipleSelection: false,
-        onImageSelected: (List<ImageModel> selectedImages) {
-          if (selectedImages.isNotEmpty) {
-            setState(() {
-              _selectedImageUrl = selectedImages.first.url;
-            });
-            Navigator.pop(context);
-          }
-        },
-      ),
-    );
+  Future<void> _updateTapped() async {
+    if (_categoryNameController.text.isNotEmpty) {
+      final category = CustomCategoryModel(
+        id: widget.category.id,
+        title: _categoryNameController.text,
+        imageUrl: widget.category.imageUrl,
+      );
+
+      await categoryController
+          .updateCategory(category: category)
+          .then((value) {
+            Get.snackbar('Success', 'Category updated successfully',);
+           // Get.to(TRoutes.categories);
+          });
+      // Get.snackbar('Success', 'Category updated successfully');
+      // Get.to(TRoutes.categories);
+    } else {
+      Get.snackbar('Error', 'Please fill all the fields');
+    }
   }
 
   @override
@@ -109,8 +113,16 @@ class _EditCategoryFormState extends State<EditCategoryForm> {
               'Update Category',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            Text(widget.category.title!,
-            style: Theme.of(context).textTheme.headlineMedium!.apply(color: TColors.primary),),
+
+            ///
+            /// CATEGORY NAME
+            ///
+            Text(
+              widget.category.title!,
+              style: Theme.of(
+                context,
+              ).textTheme.headlineMedium!.apply(color: TColors.primary),
+            ),
             const SizedBox(height: TSizes.spaceBetwwenSections),
 
             /// Name input
@@ -125,56 +137,20 @@ class _EditCategoryFormState extends State<EditCategoryForm> {
 
             const SizedBox(height: TSizes.spaceBetweenInputFields * 2),
 
-            /// Tab selection chips
-            Obx(() {
-              if (_tabs.isEmpty) {
-                return const Text("Loading tabs...");
-              }
-
-              return Wrap(
-                spacing: 8,
-                children: _tabs.map((tab) {
-                  
-                  final isSelected = _selectedTabId.value == tab.id;
-                  return ChoiceChip(
-                    label: Text(tab.title ?? 'Untitled'),
-                    selected: isSelected,
-                    onSelected: (selected) {
-                      if (selected) {
-                        _selectedTabId.value = tab.id;
-                      } else {
-                        _selectedTabId.value = null;
-                      }
-                    },
-                  );
-                }).toList(),
-              );
-            }),
-
-            const SizedBox(height: TSizes.spaceBetweenInputFields * 2),
-
             /// Image Picker using GetX controller
-            Obx(() => TImageUploader(
-                  width: 80,
-                  height: 80,
-                  image: imageController.selectedThumbnailImageUrl.value ??
-                      widget.category.imageUrl,
-                  onIconButtonPressed: () =>
-                      imageController.selectThumbnailImage(),
-                )),
+            Obx(
+              () => TImageUploader(
+                width: 80,
+                height: 80,
+                image:
+                    imageController.selectedThumbnailImageUrl.value ??
+                    widget.category.imageUrl,
+                onIconButtonPressed:
+                    () => imageController.selectThumbnailImage(),
+              ),
+            ),
 
             const SizedBox(height: TSizes.spaceBetweenInputFields),
-
-            /// Featured Checkbox
-            CheckboxListTile(
-              title: const Text('Is this Icon? Tick it'),
-              value: true,
-              onChanged: (value) {
-                setState(() => _isFeatured = value ?? false);
-              },
-              controlAffinity: ListTileControlAffinity.leading,
-              contentPadding: EdgeInsets.zero,
-            ),
 
             const SizedBox(height: TSizes.spaceBetweenInputFields),
 
@@ -182,39 +158,16 @@ class _EditCategoryFormState extends State<EditCategoryForm> {
             SizedBox(
               width: double.infinity,
               child: GestureDetector(
-                onTap: () {
-                  final selectedImage = imageController.selectedThumbnailImageUrl.value;
-                  final selectedTab = _selectedTabId.value;
-
-                  if (_formKey.currentState!.validate() &&
-                      selectedImage != null &&
-                      selectedTab != null || widget.category.imageUrl != null && widget.category.title != null) {
-                    controller.updateCategory(
-                      context: context,
-                      title: _categoryNameController.text,
-                      imageUrl: (selectedImage ?? widget.category.imageUrl) ?? '',
-                      isIcon: _isFeatured ?? false,
-                      tabId: selectedTab!,
-                      id: widget.category.id ?? '',
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content:
-                            Text('Please complete all fields including image and tab'),
-                      ),
-                    );
-                  }
-                },
+                onTap: _updateTapped,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: dark
-                        ? Colors.white.withOpacity(0.05)
-                        : TColors.primary,
+                    color:
+                        dark ? Colors.white.withOpacity(0.05) : TColors.primary,
                     border: Border.all(
-                      color: dark
-                          ? Colors.grey.withOpacity(0.5)
-                          : TColors.dark.withOpacity(0.2),
+                      color:
+                          dark
+                              ? Colors.grey.withOpacity(0.5)
+                              : TColors.dark.withOpacity(0.2),
                     ),
                     borderRadius: BorderRadius.circular(5),
                   ),
@@ -230,7 +183,7 @@ class _EditCategoryFormState extends State<EditCategoryForm> {
               ),
             ),
 
-            const SizedBox(height: TSizes.spaceBetweenInputFields * 2),
+            //const SizedBox(height: TSizes.spaceBetweenInputFields * 2),
           ],
         ),
       ),
