@@ -61,9 +61,9 @@ class CategoryTable extends StatelessWidget {
         dataRowHeight: 64,
         columns: const [
           DataColumn2(label: Text('Name')),
-          DataColumn2(label: Text('Parent')),
-          DataColumn2(label: Text('Icon')),
-          DataColumn2(label: Text('Date')),
+          DataColumn2(label: Text('Products')),
+          //DataColumn2(label: Text('Icon')),
+          //DataColumn2(label: Text('Date')),
           DataColumn2(label: Text('Action'), fixedWidth: 100),
         ],
         source: CategoryRows(categories),

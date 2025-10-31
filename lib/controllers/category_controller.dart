@@ -31,6 +31,9 @@ class CategoryControllerCustom extends GetxController {
     try {
       isLoading.value = true;
       await _categoryRepo.addCategory(category);
+
+      // reload categories
+       getAllCategories();
     } catch (e) {
       logger.e(e);
     } finally {

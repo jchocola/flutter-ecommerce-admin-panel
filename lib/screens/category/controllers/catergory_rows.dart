@@ -65,7 +65,7 @@ class CategoryRows extends DataTableSource {
       } else if (snapshot.hasError) {
         return const Text('Error');
       } else if (!snapshot.hasData || snapshot.data == null) {
-        return const Text('No title');
+        return const Text('5');
       } else {
         return Text(snapshot.data!); // display the title
       }
@@ -73,11 +73,11 @@ class CategoryRows extends DataTableSource {
   ),
 ),
 
-        DataCell(Icon(
-          Iconsax.icon3,
-          color:  TColors.primary ,
-        )),
-        DataCell(Text('data')),
+        // DataCell(Icon(
+        //   Iconsax.icon3,
+        //   color:  TColors.primary ,
+        // )),
+        //DataCell(Text('data')),
         DataCell(
          TTabActionButton(
   onEditPressed: () async {
