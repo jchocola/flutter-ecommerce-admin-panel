@@ -1,5 +1,6 @@
 import 'package:admin_panel/app.dart';
 import 'package:admin_panel/controllers/dashboard/dashboard_controller.dart';
+import 'package:admin_panel/firebase_options.dart';
 import 'package:admin_panel/screens/dashboard/controller/monthly_stats_controller.dart';
 import 'package:admin_panel/screens/layouts/headers/controller/header_controller.dart';
 import 'package:admin_panel/screens/media/controller/media_controller.dart';
@@ -10,6 +11,7 @@ import 'package:admin_panel/screens/settings/other_screens/set_roles_permission/
 
 import 'package:admin_panel/util/constants/supabase.dart';
 import 'package:admin_panel/util/routes/routes.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -23,6 +25,13 @@ Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
+
+///
+/// Initialize Firebase
+///
+await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+);
 
   setPathUrlStrategy();
 
