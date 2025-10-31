@@ -18,9 +18,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:logger/logger.dart';
 
 import 'package:url_strategy/url_strategy.dart';
 
+
+  ///
+  ///  Logger instance
+  ///
+var logger = Logger();
 
 Future<void> main() async {
  

@@ -1,3 +1,4 @@
+import 'package:admin_panel/main.dart';
 import 'package:admin_panel/repositories/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -20,12 +21,12 @@ class UserController  extends GetxController{
 
   Future<void> fetchCurrentUser() async {
     try {
-
+      logger.i("Fetching current user");
       User? currentUser = await auth_repository.getCurrentUser();
       user.value = currentUser;
-      print('Current user: ${user.value?.email}');
+      logger.i('Current user: ${user.value?.email}');
     } catch (e) {
-      print('Error fetching current user: $e');
+      logger.e('Error fetching current user: $e');
     }
   }
 }
