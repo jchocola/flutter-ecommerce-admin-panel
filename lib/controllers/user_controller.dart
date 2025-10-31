@@ -48,4 +48,18 @@ class UserController extends GetxController {
       rethrow;
     }
   }
+
+
+  Future<void> logout() async {
+    try {
+      logger.i("Attempting logout");
+      await auth_repository.signOut();
+      user.value = null;
+      logger.i('Logout successful');
+      update();
+    } catch (e) {
+      logger.e('Logout failed: $e');
+      rethrow;
+    }
+  }
 }

@@ -24,6 +24,15 @@ class AuthRepository {
     }
   }
 
+
+  Future<void> signOut() async {
+    try {
+      await _firebaseAuth.signOut();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   // singleton pattern
   AuthRepository._privateConstructor();
   static final AuthRepository _instance = AuthRepository._privateConstructor();
