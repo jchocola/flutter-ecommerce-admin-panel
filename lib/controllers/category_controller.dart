@@ -10,7 +10,14 @@ class CategoryControllerCustom extends GetxController {
   final _categoryRepo = Get.find<CategoryRepository>();
 
   var pickedFile = Rx<FilePickerResult?>(null);
+  var categoryList = <CustomCategoryModel>[].obs;
   var isLoading = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    getAllCategories();
+  }
 
   // uses case
   void pickImage() async {
@@ -28,14 +35,13 @@ class CategoryControllerCustom extends GetxController {
       logger.e(e);
     } finally {
       isLoading.value = false;
-
     }
   }
 
   Future<String?> uploadImageandGetUrl({required String categoryId}) async {
     logger.i('Uploading image for category $categoryId');
     try {
-       isLoading.value = true;
+      isLoading.value = true;
       return await _categoryRepo.uploadImage(
         categoryId: categoryId,
         file: pickedFile.value!.files[0],
@@ -43,6 +49,19 @@ class CategoryControllerCustom extends GetxController {
     } catch (e) {
       logger.e(e);
       return null;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> getAllCategories() async {
+    try {
+      logger.i('Getting all categories');
+      isLoading.value = true;
+      categoryList.value = await _categoryRepo.getCategories();
+    } catch (e) {
+      logger.e('Error getting categories');
+      logger.e(e);
     } finally {
       isLoading.value = false;
     }

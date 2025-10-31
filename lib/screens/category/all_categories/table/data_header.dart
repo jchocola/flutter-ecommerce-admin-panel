@@ -1,3 +1,4 @@
+import 'package:admin_panel/controllers/category_controller.dart';
 import 'package:admin_panel/screens/category/controllers/category_controller.dart';
 import 'package:admin_panel/screens/category/controllers/catergory_rows.dart';
 import 'package:admin_panel/screens/dashboard/widgets/paginated_table.dart';
@@ -15,7 +16,7 @@ import 'package:admin_panel/screens/dashboard/widgets/paginated_table.dart';
 import 'package:lottie/lottie.dart';
 
 class CategoryTable extends StatelessWidget {
-  final controller = Get.put(CategoryController());
+  final controller = Get.find<CategoryControllerCustom>();
 
   CategoryTable({super.key});
 
@@ -32,10 +33,7 @@ class CategoryTable extends StatelessWidget {
         );
       }
 
-      final categories =
-          controller.filterCategories
-              .map((json) => CategoryModel.fromJson(json))
-              .toList();
+      final categories = controller.categoryList;
 
       if (categories.isEmpty) {
         return Center(

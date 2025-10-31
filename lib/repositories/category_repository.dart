@@ -34,4 +34,15 @@ class CategoryRepository {
       rethrow;
     }
   }
+
+  Future<List<CustomCategoryModel>> getCategories() async {
+    try {
+      var snapshot = await categoryRef.get();
+      var categories = snapshot.docs.map((e) => CustomCategoryModel.fromMap(e.data())).toList();
+      return categories;
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
+  }
 }

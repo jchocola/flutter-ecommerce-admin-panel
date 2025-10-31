@@ -18,7 +18,7 @@ import 'package:intl/intl.dart';
 
 
 class CategoryRows extends DataTableSource {
-  final List<CategoryModel> categories;
+  final List<CustomCategoryModel> categories;
 
   CategoryRows(this.categories);
 
@@ -27,8 +27,7 @@ class CategoryRows extends DataTableSource {
     if (index >= categories.length) return null;
     final category = categories[index];
    // final supabase = Supabase.instance.client;
-
-String formattedDate = DateFormat('yyyy-MM-dd').format(category.createdAt!); // 2025-07-04
+//String formattedDate = DateFormat('yyyy-MM-dd').format(category.createdAt!); // 2025-07-04
 
 
     return DataRow2(
@@ -59,7 +58,7 @@ String formattedDate = DateFormat('yyyy-MM-dd').format(category.createdAt!); // 
         ),
      DataCell(
   FutureBuilder<String?>(
-    future: getTitle(category.tab_id.toString()), // async call
+    future: getTitle(category.title.toString()), // async call
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         return const CircularProgressIndicator(); // loading indicator
@@ -75,10 +74,10 @@ String formattedDate = DateFormat('yyyy-MM-dd').format(category.createdAt!); // 
 ),
 
         DataCell(Icon(
-          (category.isIcon ?? false) ? Iconsax.icon3 : Iconsax.icon,
-          color: (category.isIcon ?? false) ? TColors.primary : Colors.grey,
+          Iconsax.icon3,
+          color:  TColors.primary ,
         )),
-        DataCell(Text(formattedDate)),
+        DataCell(Text('data')),
         DataCell(
          TTabActionButton(
   onEditPressed: () async {
