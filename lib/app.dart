@@ -2,6 +2,7 @@ import 'package:admin_panel/common/responsive/screens/desktop_layout.dart';
 import 'package:admin_panel/common/responsive/screens/mobile_layout.dart';
 import 'package:admin_panel/common/responsive/screens/tablet_layout.dart';
 import 'package:admin_panel/common/widgets/roundend_styles/t_rounded_container.dart';
+import 'package:admin_panel/controllers/user_controller.dart';
 import 'package:admin_panel/screens/dashboard/dahsboard.dart';
 import 'package:admin_panel/screens/layouts/responsive_design.dart';
 import 'package:admin_panel/screens/layouts/site_layout.dart';
@@ -30,7 +31,7 @@ class App extends StatelessWidget {
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
       getPages: TAppRoute.page,
-      initialRoute:  TRoutes.dashboard ,
+      initialRoute:  Get.find<UserController>().user.value != null ? TRoutes.dashboard : TRoutes.login,
       unknownRoute: GetPage(name: '/page-not-found', page: () => const Scaffold(body: Center(child: Text('Page not found'),),)),
     );
   }
