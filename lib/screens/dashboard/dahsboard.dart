@@ -1,6 +1,7 @@
 import 'package:admin_panel/common/responsive/screens/desktop_layout.dart';
 import 'package:admin_panel/common/responsive/screens/mobile_layout.dart';
 import 'package:admin_panel/common/responsive/screens/tablet_layout.dart';
+import 'package:admin_panel/controllers/user_controller.dart';
 import 'package:admin_panel/screens/dashboard/responsive_screens/dashboard_desktop.dart';
 import 'package:admin_panel/screens/dashboard/responsive_screens/desktop_mobile.dart';
 import 'package:admin_panel/screens/dashboard/responsive_screens/desktop_tablet.dart';
@@ -15,11 +16,31 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final session = Supabase.instance.client.auth.currentSession;
-    //   if (session == null) {
-    //   Future.microtask(() => Get.offAllNamed(TRoutes.login));
-    //   return const SizedBox();
-    // }
-    return TSiteTemplate(useLayout: false, desktop: DesktopLayout(body: DashboardDesktopScreen(),), tablet: TabletLayout(body: DashBoardTabletScreen(),), mobile:  MobileLayout(body: DashBoardMobileScreen(),),);
+
+    ///
+    ///  IF NO USER FOUND REDIRECT TO LOGIN SCREEN
+    ///  ELSE SHOW DASHBOARD
+    ///
+
+    return  GetBuilder<UserController>(
+      builder: (controller) {
+        if (controller.user.value == null) {
+          // Future.microtask(() {
+          //   Navigator.of(context).pushReplacementNamed(Routes.login);
+          // });
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.of(context).pushReplacementNamed(TRoutes.login);
+          });
+          return const SizedBox.shrink();
+        } else {
+          return TSiteTemplate(
+            useLayout: false,
+            desktop: DesktopLayout(body: DashboardDesktopScreen()),
+            tablet: TabletLayout(body: DashBoardTabletScreen()),
+            mobile: MobileLayout(body: DashBoardMobileScreen()),
+          );
+        }
+      },
+    );
   }
 }
