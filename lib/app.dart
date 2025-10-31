@@ -23,7 +23,6 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<UserController>(
       builder: (controller) {
-       
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           scrollBehavior: const SmoothScrollBehavior(),
@@ -33,7 +32,6 @@ class App extends StatelessWidget {
           darkTheme: TAppTheme.darkTheme,
           getPages: TAppRoute.page,
           initialRoute: TRoutes.dashboard,
-              
           unknownRoute: GetPage(
             name: '/page-not-found',
             page:

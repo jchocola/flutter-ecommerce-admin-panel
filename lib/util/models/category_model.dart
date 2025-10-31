@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:uuid/uuid.dart';
 
 class CategoryModel {
@@ -50,4 +52,37 @@ class CategoryModel {
 
   @override
   String toString() => title ?? 'Unnamed Category';
+}
+
+
+class CustomCategoryModel {
+  final String? id; // NOT Uuid!
+  final String? title;
+  final String? imageUrl;
+  CustomCategoryModel({
+    this.id,
+    this.title,
+    this.imageUrl,
+  });
+
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'imageUrl': imageUrl,
+    };
+  }
+
+  factory CustomCategoryModel.fromMap(Map<String, dynamic> map) {
+    return CustomCategoryModel(
+      id: map['id'],
+      title: map['title'],
+      imageUrl: map['imageUrl'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory CustomCategoryModel.fromJson(String source) => CustomCategoryModel.fromMap(json.decode(source));
 }
