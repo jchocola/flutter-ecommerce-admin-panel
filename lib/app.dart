@@ -16,23 +16,32 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
-
 class App extends StatelessWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      scrollBehavior: const SmoothScrollBehavior(),
-      title: TText.appName,
-      themeMode: ThemeMode.light,
-      theme: TAppTheme.lightTheme,
-      darkTheme: TAppTheme.darkTheme,
-      getPages: TAppRoute.page,
-      initialRoute:  Get.find<UserController>().user.value != null ? TRoutes.dashboard : TRoutes.login,
-      unknownRoute: GetPage(name: '/page-not-found', page: () => const Scaffold(body: Center(child: Text('Page not found'),),)),
+    return GetBuilder<UserController>(
+      builder: (controller) {
+       
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          scrollBehavior: const SmoothScrollBehavior(),
+          title: TText.appName,
+          themeMode: ThemeMode.light,
+          theme: TAppTheme.lightTheme,
+          darkTheme: TAppTheme.darkTheme,
+          getPages: TAppRoute.page,
+          initialRoute: TRoutes.dashboard,
+              
+          unknownRoute: GetPage(
+            name: '/page-not-found',
+            page:
+                () =>
+                    const Scaffold(body: Center(child: Text('Page not found'))),
+          ),
+        );
+      },
     );
   }
 }
@@ -42,83 +51,79 @@ class ResponsiveDesignScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TSiteTemplate(desktop:  DashboardScreen(), tablet:  Tablet(), mobile: Mobile(),);
+    return TSiteTemplate(
+      desktop: DashboardScreen(),
+      tablet: Tablet(),
+      mobile: Mobile(),
+    );
   }
 }
 
 class Desktop extends StatelessWidget {
-  const Desktop({
-    super.key,
-  });
+  const Desktop({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         TRoundedContainer(
-        height: 450,
-        backgroundColor: Colors.blue.withOpacity(0.2),
-        child: const Center(child: Text('BOX 1'),),
-      ),
-      const SizedBox(width: 20,),
-       TRoundedContainer(
-        height: 450,
-        backgroundColor: Colors.blue.withOpacity(0.2),
-        child: const Center(child: Text('BOX 1'),),
-      ),
-      const SizedBox(width: 20,),
-       TRoundedContainer(
-        height: 450,
-        backgroundColor: Colors.blue.withOpacity(0.2),
-        child: const Center(child: Text('BOX 1'),),
-      ),
-      const SizedBox(width: 20,),
+          height: 450,
+          backgroundColor: Colors.blue.withOpacity(0.2),
+          child: const Center(child: Text('BOX 1')),
+        ),
+        const SizedBox(width: 20),
+        TRoundedContainer(
+          height: 450,
+          backgroundColor: Colors.blue.withOpacity(0.2),
+          child: const Center(child: Text('BOX 1')),
+        ),
+        const SizedBox(width: 20),
+        TRoundedContainer(
+          height: 450,
+          backgroundColor: Colors.blue.withOpacity(0.2),
+          child: const Center(child: Text('BOX 1')),
+        ),
+        const SizedBox(width: 20),
       ],
     );
   }
 }
 
 class Tablet extends StatelessWidget {
-  const Tablet({
-    super.key,
-  });
+  const Tablet({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         TRoundedContainer(
-        height: 450,
-        backgroundColor: Colors.blue.withOpacity(0.2),
-        child: const Center(child: Text('BOX 2'),),
-      ),
-      const SizedBox(width: 20,),
-       TRoundedContainer(
-        height: 450,
-        backgroundColor: Colors.blue.withOpacity(0.2),
-        child: const Center(child: Text('BOX 2'),),
-      ),
-     
+          height: 450,
+          backgroundColor: Colors.blue.withOpacity(0.2),
+          child: const Center(child: Text('BOX 2')),
+        ),
+        const SizedBox(width: 20),
+        TRoundedContainer(
+          height: 450,
+          backgroundColor: Colors.blue.withOpacity(0.2),
+          child: const Center(child: Text('BOX 2')),
+        ),
       ],
     );
   }
 }
 
 class Mobile extends StatelessWidget {
-  const Mobile({
-    super.key,
-  });
+  const Mobile({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         TRoundedContainer(
-        height: 450,
-        backgroundColor: Colors.blue.withOpacity(0.2),
-        child: const Center(child: Text('BOX 3'),),
-      ),
-   
+          height: 450,
+          backgroundColor: Colors.blue.withOpacity(0.2),
+          child: const Center(child: Text('BOX 3')),
+        ),
       ],
     );
   }

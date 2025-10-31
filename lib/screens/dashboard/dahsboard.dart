@@ -25,9 +25,7 @@ class DashboardScreen extends StatelessWidget {
     return  GetBuilder<UserController>(
       builder: (controller) {
         if (controller.user.value == null) {
-          // Future.microtask(() {
-          //   Navigator.of(context).pushReplacementNamed(Routes.login);
-          // });
+         
           WidgetsBinding.instance.addPostFrameCallback((_) {
             Navigator.of(context).pushReplacementNamed(TRoutes.login);
           });
