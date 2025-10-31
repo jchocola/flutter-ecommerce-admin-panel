@@ -26,7 +26,9 @@ class CategoryRepository {
     try {
       var imagePath = '${categoryId}.jpg';
       final data = file.bytes;
-      var snapshot = await storageRef.child(imagePath).putData(data!, SettableMetadata(contentType: 'image/jpg'));
+      var snapshot = await storageRef
+          .child(imagePath)
+          .putData(data!, SettableMetadata(contentType: 'image/jpg'));
       var downloadUrl = await snapshot.ref.getDownloadURL();
       return downloadUrl;
     } catch (e) {
@@ -38,8 +40,20 @@ class CategoryRepository {
   Future<List<CustomCategoryModel>> getCategories() async {
     try {
       var snapshot = await categoryRef.get();
-      var categories = snapshot.docs.map((e) => CustomCategoryModel.fromMap(e.data())).toList();
+      var categories =
+          snapshot.docs
+              .map((e) => CustomCategoryModel.fromMap(e.data()))
+              .toList();
       return categories;
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
+  }
+
+  Future<void> deleteCategory({required String categoryId}) async {
+    try {
+      await categoryRef.doc(categoryId).delete();
     } catch (e) {
       logger.e(e);
       rethrow;

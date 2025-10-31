@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:admin_panel/common/widgets/buttons/tab_action_button.dart';
 import 'package:admin_panel/common/widgets/dialogs/dialogs.dart';
 import 'package:admin_panel/common/widgets/roundend_styles/t_rounded_image.dart';
+import 'package:admin_panel/controllers/category_controller.dart';
 import 'package:admin_panel/screens/category/controllers/category_controller.dart';
 import 'package:admin_panel/util/constants/colors.dart';
 import 'package:admin_panel/util/constants/image_strings.dart';
@@ -16,7 +17,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
-
 class CategoryRows extends DataTableSource {
   final List<CustomCategoryModel> categories;
 
@@ -26,9 +26,8 @@ class CategoryRows extends DataTableSource {
   DataRow? getRow(int index) {
     if (index >= categories.length) return null;
     final category = categories[index];
-   // final supabase = Supabase.instance.client;
-//String formattedDate = DateFormat('yyyy-MM-dd').format(category.createdAt!); // 2025-07-04
-
+    // final supabase = Supabase.instance.client;
+    //String formattedDate = DateFormat('yyyy-MM-dd').format(category.createdAt!); // 2025-07-04
 
     return DataRow2(
       cells: [
@@ -48,30 +47,32 @@ class CategoryRows extends DataTableSource {
               Expanded(
                 child: Text(
                   category.title ?? '',
-                  style: Theme.of(Get.context!).textTheme.bodyLarge!.apply(color: TColors.primary),
+                  style: Theme.of(
+                    Get.context!,
+                  ).textTheme.bodyLarge!.apply(color: TColors.primary),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-              )
+              ),
             ],
           ),
         ),
-     DataCell(
-  FutureBuilder<String?>(
-    future: getTitle(category.title.toString()), // async call
-    builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return const CircularProgressIndicator(); // loading indicator
-      } else if (snapshot.hasError) {
-        return const Text('Error');
-      } else if (!snapshot.hasData || snapshot.data == null) {
-        return const Text('5');
-      } else {
-        return Text(snapshot.data!); // display the title
-      }
-    },
-  ),
-),
+        DataCell(
+          FutureBuilder<String?>(
+            future: getTitle(category.title.toString()), // async call
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator(); // loading indicator
+              } else if (snapshot.hasError) {
+                return const Text('Error');
+              } else if (!snapshot.hasData || snapshot.data == null) {
+                return const Text('5');
+              } else {
+                return Text(snapshot.data!); // display the title
+              }
+            },
+          ),
+        ),
 
         // DataCell(Icon(
         //   Iconsax.icon3,
@@ -79,34 +80,43 @@ class CategoryRows extends DataTableSource {
         // )),
         //DataCell(Text('data')),
         DataCell(
-         TTabActionButton(
-  onEditPressed: () async {
-  final box = GetStorage();
-box.write('cached_category', category.toJson());
+          TTabActionButton(
+            onEditPressed: () async {
+              final box = GetStorage();
+              box.write('cached_category', category.toJson());
 
-    final result = await Get.toNamed(TRoutes.editCategory, arguments: category);
-    if (result == true) {
-      final controller = Get.find<CategoryController>();
-      await controller.fetchCategories();  // Refresh categories list immediately
-    }
-  },
-  onDeletePressed: () {
-      TDialogs.defaultDialog(
-  context: Get.context!,
-  title: 'Delete Category',
-  confirmText: 'Delete',
-  onConfirm: () async {
-    await CategoryController.instance.deleteCategory(category.id ?? '');
-    // Optionally close the dialog if not closed inside deleteTab
-    // Get.back();
-  },
-  content: 'Do you want to delete Category ${category.title!.toUpperCase()}?',
-  // Add transitionBuilder if supported to fix hero tag issue
-);
-  }, // TODO: Add deletion logic
-),
-
-        )
+              final result = await Get.toNamed(
+                TRoutes.editCategory,
+                arguments: category,
+              );
+              if (result == true) {
+                final controller = Get.find<CategoryController>();
+                await controller
+                    .fetchCategories(); // Refresh categories list immediately
+              }
+            },
+            onDeletePressed: () {
+              TDialogs.defaultDialog(
+                context: Get.context!,
+                title: 'Delete Category',
+                confirmText: 'Delete',
+                onConfirm: () async {
+                  //await CategoryController.instance.deleteCategory(category.id ?? '');
+                  await Get.find<CategoryControllerCustom>().deleteCategory(
+                    categoryId: category.id!,
+                  );
+                  // Optionally close the dialog if not closed inside deleteTab
+                  // Get.back();
+                  Get.back();
+                  Get.snackbar('Success', 'Category deleted successfully!');
+                },
+                content:
+                    'Do you want to delete Category ${category.title!.toUpperCase()}?',
+                // Add transitionBuilder if supported to fix hero tag issue
+              );
+            }, // TODO: Add deletion logic
+          ),
+        ),
       ],
     );
   }
@@ -122,15 +132,13 @@ box.write('cached_category', category.toJson());
 }
 
 Future<String?> getTitle(String tabId) async {
- // final supabase = Supabase.instance.client;
+  // final supabase = Supabase.instance.client;
 
   // final response = await supabase
   //     .from('tab_config')
   //     .select('title')
   //     .eq('id', tabId)
   //     .maybeSingle();
-
- 
 
   // if (response == null || response == {}) {
   //   print('No data found');
@@ -141,4 +149,3 @@ Future<String?> getTitle(String tabId) async {
   // print('Title: ${response['title']}');
   // return response['title'];
 }
-

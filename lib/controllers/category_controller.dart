@@ -69,4 +69,18 @@ class CategoryControllerCustom extends GetxController {
       isLoading.value = false;
     }
   }
+
+  Future <void> deleteCategory({required String categoryId}) async {
+    try {
+      logger.i('Deleting category $categoryId');
+      isLoading.value = true;
+      await _categoryRepo.deleteCategory(categoryId: categoryId);
+      // reload categories
+      getAllCategories();
+    } catch (e) {
+      logger.e(e);
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }
