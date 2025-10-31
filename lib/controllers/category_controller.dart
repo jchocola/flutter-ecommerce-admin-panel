@@ -9,9 +9,15 @@ import 'package:file_picker/file_picker.dart';
 class CategoryControllerCustom extends GetxController {
   final _categoryRepo = Get.find<CategoryRepository>();
 
-  var pickedFile = Rx<FilePickerResult?>(null);    /// image file
-  var categoryList = <CustomCategoryModel>[].obs; /// list of categories
-  var isLoading = false.obs;    /// loading state
+  var pickedFile = Rx<FilePickerResult?>(null);
+
+  /// image file
+  var categoryList = <CustomCategoryModel>[].obs;
+
+  /// list of categories
+  var isLoading = false.obs;
+
+  /// loading state
   var editingCategory = CustomCategoryModel().obs;
 
   @override
@@ -34,7 +40,7 @@ class CategoryControllerCustom extends GetxController {
       await _categoryRepo.addCategory(category);
 
       // reload categories
-       getAllCategories();
+      getAllCategories();
     } catch (e) {
       logger.e(e);
     } finally {
@@ -71,10 +77,14 @@ class CategoryControllerCustom extends GetxController {
     }
   }
 
-  Future <void> deleteCategory({required String categoryId}) async {
+  Future<void> deleteCategory({required String categoryId}) async {
     try {
       logger.i('Deleting category $categoryId');
       isLoading.value = true;
+      // delete image from storage
+      await _categoryRepo.deleteImage(ref: '${categoryId}.jpg');
+
+      // delete category
       await _categoryRepo.deleteCategory(categoryId: categoryId);
       // reload categories
       getAllCategories();
@@ -93,12 +103,35 @@ class CategoryControllerCustom extends GetxController {
     pickedFile.value = null;
   }
 
-
   Future<void> updateCategory({required CustomCategoryModel category}) async {
     try {
       logger.i('Updating category ${category.id}');
+      CustomCategoryModel categoryWithNewData = category;
+     
+
+     ///
+     /// NEW 
+     ///
+      if (pickedFile.value != null) {
+        // delete old image
+        // get old image ref
+        final ref = '${category.id}.jpg';
+        logger.i('Deleting old image ${ref}');
+        // delete old image
+        await _categoryRepo.deleteImage(ref: ref);
+
+        // upload new image
+        logger.i('Uploading new image');
+        final newImageUrl = await uploadImageandGetUrl(
+          categoryId: category.id!,
+        );
+
+        // update category with new image url
+        categoryWithNewData = category.copyWith(imageUrl: newImageUrl);
+      }
+
       isLoading.value = true;
-      await _categoryRepo.updateCategory(category: category);
+      await _categoryRepo.updateCategory(category: categoryWithNewData);
       // reload categories
       getAllCategories();
     } catch (e) {

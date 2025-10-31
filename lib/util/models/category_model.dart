@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/widgets.dart';
 import 'package:uuid/uuid.dart';
 
 class CategoryModel {
@@ -85,4 +86,16 @@ class CustomCategoryModel {
   String toJson() => json.encode(toMap());
 
   factory CustomCategoryModel.fromJson(String source) => CustomCategoryModel.fromMap(json.decode(source));
+
+  CustomCategoryModel copyWith({
+    String? id,
+    String? title,
+    String? imageUrl,
+  }) {
+    return CustomCategoryModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      imageUrl: imageUrl ?? this.imageUrl,
+    );
+  }
 }

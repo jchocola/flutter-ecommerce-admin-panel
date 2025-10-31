@@ -63,13 +63,29 @@ class CategoryRepository {
 
   Future<void> updateCategory({required CustomCategoryModel category}) async {
     try {
-      logger.i('Updating category ${category.title}');
+
+      //  update category
       await categoryRef.doc(category.id).update(category.toMap());
 
-      logger.i('Category updated');
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
+  }
 
-      // reload categories
-       getCategories();
+  Future<String?> getRefViaDownloadUrl(String url) async {
+    try {
+      var snapshot = FirebaseStorage.instance.refFromURL(url);
+      return snapshot.fullPath;
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
+  }
+
+  Future<void> deleteImage({required String ref}) async {
+    try {
+      await storageRef.child(ref).delete();
     } catch (e) {
       logger.e(e);
       rethrow;

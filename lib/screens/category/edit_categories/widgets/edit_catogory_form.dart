@@ -72,12 +72,10 @@ class _EditCategoryFormState extends State<EditCategoryForm> {
         imageUrl: widget.category.imageUrl,
       );
 
-      await categoryController
-          .updateCategory(category: category)
-          .then((value) {
-            Get.snackbar('Success', 'Category updated successfully',);
-           // Get.to(TRoutes.categories);
-          });
+      await categoryController.updateCategory(category: category).then((value) {
+        Get.snackbar('Success', 'Category updated successfully');
+        // Get.to(TRoutes.categories);
+      });
       // Get.snackbar('Success', 'Category updated successfully');
       // Get.to(TRoutes.categories);
     } else {
@@ -95,6 +93,8 @@ class _EditCategoryFormState extends State<EditCategoryForm> {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
     final imageController = Get.put(ProductImagesController());
+
+    final catalogController = Get.find<CategoryControllerCustom>();
 
     return TRoundedContainer(
       backgroundColor: dark ? Colors.white.withOpacity(0.05) : Colors.white,
@@ -145,10 +145,26 @@ class _EditCategoryFormState extends State<EditCategoryForm> {
                 image:
                     imageController.selectedThumbnailImageUrl.value ??
                     widget.category.imageUrl,
-                onIconButtonPressed:
-                    () => imageController.selectThumbnailImage(),
+                // onIconButtonPressed:
+                //     () => imageController.selectThumbnailImage(),
               ),
             ),
+
+            Obx(() {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(onPressed: () => catalogController.pickImage(), icon: Icon(Iconsax.image)),
+
+                  SizedBox(
+                    width: 80,
+                    height: 80,
+                    child: catalogController.pickedFile.value != null
+                        ? Image.network(catalogController.pickedFile.value!.files[0].path!)
+                        : Container(),)
+                ],
+              );
+            }),
 
             const SizedBox(height: TSizes.spaceBetweenInputFields),
 
