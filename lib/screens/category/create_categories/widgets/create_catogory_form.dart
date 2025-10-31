@@ -142,60 +142,60 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
 
             /// Tab selection chips
             ///
-            Text('Home screen Tabs'),
-            const SizedBox(height: TSizes.spaceBetwwenItems,),
-            Obx(() {
-              if (_tabsHome.isEmpty) {
-                return const Text("Loading tabs...");
-              }
+            // Text('Home screen Tabs'),
+            // const SizedBox(height: TSizes.spaceBetwwenItems,),
+            // Obx(() {
+            //   if (_tabsHome.isEmpty) {
+            //     return const Text("Loading tabs...");
+            //   }
 
-              return Wrap(
-                spacing: 8,
-                children:
-                    _tabsHome.map((tab) {
-                      final isSelected = _selectedTabId.value == tab.id;
-                      return ChoiceChip(
-                        label: Text(tab.title ?? 'Untitled'),
-                        selected: isSelected,
-                        onSelected: (selected) {
-                          if (selected) {
-                            _selectedTabId.value = tab.id;
-                          } else {
-                            _selectedTabId.value = null;
-                          }
-                        },
-                      );
-                    }).toList(),
-              );
-            }),
-            const SizedBox(height: TSizes.spaceBetwwenSections,),
-            Text('Store screen Tabs'),
-            const SizedBox(height: TSizes.spaceBetwwenItems,),
-            Obx(() {
-              if (_tabsStore.isEmpty) {
-                return const Text("Loading tabs...");
-              }
+            //   return Wrap(
+            //     spacing: 8,
+            //     children:
+            //         _tabsHome.map((tab) {
+            //           final isSelected = _selectedTabId.value == tab.id;
+            //           return ChoiceChip(
+            //             label: Text(tab.title ?? 'Untitled'),
+            //             selected: isSelected,
+            //             onSelected: (selected) {
+            //               if (selected) {
+            //                 _selectedTabId.value = tab.id;
+            //               } else {
+            //                 _selectedTabId.value = null;
+            //               }
+            //             },
+            //           );
+            //         }).toList(),
+            //   );
+            // }),
+            // const SizedBox(height: TSizes.spaceBetwwenSections,),
+            // Text('Store screen Tabs'),
+            // const SizedBox(height: TSizes.spaceBetwwenItems,),
+            // Obx(() {
+            //   if (_tabsStore.isEmpty) {
+            //     return const Text("Loading tabs...");
+            //   }
 
-              return Wrap(
-                spacing: 8,
-                children:
-                    _tabsStore.map((tab) {
-                      final isSelected = _selectedTabId.value == tab.id;
-                      return ChoiceChip(
-                        label: Text(tab.title ?? 'Untitled'),
-                        selected: isSelected,
-                        onSelected: (selected) {
-                          if (selected) {
-                            _selectedTabId.value = tab.id;
-                          } else {
-                            _selectedTabId.value = null;
-                          }
-                        },
-                      );
-                    }).toList(),
-              );
-            }),
-            const SizedBox(height: TSizes.spaceBetweenInputFields * 2),
+            //   return Wrap(
+            //     spacing: 8,
+            //     children:
+            //         _tabsStore.map((tab) {
+            //           final isSelected = _selectedTabId.value == tab.id;
+            //           return ChoiceChip(
+            //             label: Text(tab.title ?? 'Untitled'),
+            //             selected: isSelected,
+            //             onSelected: (selected) {
+            //               if (selected) {
+            //                 _selectedTabId.value = tab.id;
+            //               } else {
+            //                 _selectedTabId.value = null;
+            //               }
+            //             },
+            //           );
+            //         }).toList(),
+            //   );
+            // }),
+            // const SizedBox(height: TSizes.spaceBetweenInputFields * 2),
 
             /// Image Picker using GetX controller
             Obx(
@@ -213,15 +213,15 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
             const SizedBox(height: TSizes.spaceBetweenInputFields),
 
             /// Featured Checkbox
-            CheckboxListTile(
-              title: const Text('Is this Icon? Tick it'),
-              value: _isFeatured,
-              onChanged: (value) {
-                setState(() => _isFeatured = value ?? false);
-              },
-              controlAffinity: ListTileControlAffinity.leading,
-              contentPadding: EdgeInsets.zero,
-            ),
+            // CheckboxListTile(
+            //   title: const Text('Is this Icon? Tick it'),
+            //   value: _isFeatured,
+            //   onChanged: (value) {
+            //     setState(() => _isFeatured = value ?? false);
+            //   },
+            //   controlAffinity: ListTileControlAffinity.leading,
+            //   contentPadding: EdgeInsets.zero,
+            // ),
 
             const SizedBox(height: TSizes.spaceBetweenInputFields),
 
