@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -52,9 +53,9 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCNErw9ehw1kVtVtNo6jb6xkJhFPr1gsH0',
-    appId: '1:771964208989:web:0508e9833f9c70dcfacab4',
+  static  FirebaseOptions web = FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_WEB_API_KEY']!,
+    appId: dotenv.env['FIREBASE_APP_ID']!,
     messagingSenderId: '771964208989',
     projectId: 'chanka-jewelry',
     authDomain: 'chanka-jewelry.firebaseapp.com',
