@@ -24,7 +24,7 @@ Future<void> DI() async {
 
   // controllers
   Get.lazyPut(() => UserController());
-  Get.lazyPut(()=> CategoryController());
+  Get.lazyPut(()=> CategoryControllerCustom());
 
   Get.lazyPut(() => MediaController());
   Get.lazyPut(() => ProductsController());

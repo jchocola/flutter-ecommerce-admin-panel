@@ -1,9 +1,18 @@
 import 'package:admin_panel/repositories/category_repository.dart';
 import 'package:get/get.dart';
+import 'package:file_picker/file_picker.dart';
 
-class CategoryController extends GetxController {
-
+class CategoryControllerCustom extends GetxController {
   final _categoryRepo = Get.find<CategoryRepository>();
 
- // var pickedXfile = <Xfiles>.obs;
+  var pickedFile = Rx<FilePickerResult?>(null);
+
+  // uses case
+  void pickImage() async {
+    pickedFile.value = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+    );
+
+    update();
+  }
 }

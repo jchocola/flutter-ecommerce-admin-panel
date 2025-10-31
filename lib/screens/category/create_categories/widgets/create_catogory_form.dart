@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:admin_panel/common/widgets/images/image_uploader.dart';
 import 'package:admin_panel/common/widgets/roundend_styles/t_rounded_container.dart';
+import 'package:admin_panel/controllers/category_controller.dart';
 import 'package:admin_panel/screens/category/controllers/category_controller.dart';
 import 'package:admin_panel/screens/media/widgets/media_content.dart';
 import 'package:admin_panel/screens/products/create_products/controller/image_controller.dart';
@@ -108,7 +111,7 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
     final imageController = Get.put(ProductImagesController());
-
+    final catagoryController = Get.find<CategoryControllerCustom>();
     return TRoundedContainer(
       backgroundColor: dark ? Colors.white.withOpacity(0.05) : Colors.white,
       showBorder: true,
@@ -198,16 +201,18 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
             // const SizedBox(height: TSizes.spaceBetweenInputFields * 2),
 
             /// Image Picker using GetX controller
-            Obx(
-              () => TImageUploader(
-                width: 80,
-                height: 80,
-                image:
-                    imageController.selectedThumbnailImageUrl.value ??
-                    TImages.placeholder,
-                onIconButtonPressed:
-                    () => imageController.selectThumbnailImage(),
-              ),
+          
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(onPressed: ()=>catagoryController.pickImage(), icon: const Icon(Iconsax.image)),
+                Obx(
+                  ()=> SizedBox( height :80, width: 80 , child:  Image.network(
+                    catagoryController.pickedFile.value?.files.first.path ?? ''
+                  ))
+                ),
+              ],
             ),
 
             const SizedBox(height: TSizes.spaceBetweenInputFields),
